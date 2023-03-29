@@ -12,12 +12,12 @@
 typedef union {
     float f;
     unsigned x;
-} floatX;
+} Float;
 
 typedef union {
     double d;
     unsigned long long int x;
-} doubleX;
+} Double;
 
 double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
     int cmp, status;
@@ -126,7 +126,7 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
             if (status != 0) sticky |= 0x1;
             
             // 3. Convert "r" to double. It should be exactly representable.
-            doubleX dx;
+            Double dx;
             dx.d = mpfr_get_d(r, MPFR_RNDZ);
             
             // 4. Add "sticky bit" to the numPrec-th bit
@@ -221,7 +221,7 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
             if (status != 0) sticky |= 0x1;
             
             // 3. Convert "r" to double. It should be exactly representable.
-            doubleX dx;
+            Double dx;
             dx.d = mpfr_get_d(r, MPFR_RNDZ);
             
             // 4. Add "sticky bit" to the numPrec-th bit
@@ -244,7 +244,7 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
     if (status != 0) sticky |= 0x1;
     
     // 3. Convert "r" to double. It should be exactly representable.
-    doubleX dx;
+    Double dx;
     dx.d = mpfr_get_d(r, MPFR_RNDZ);
     
     // 4. Add "sticky bit" to the numPrec-th bit

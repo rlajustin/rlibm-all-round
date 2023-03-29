@@ -6,9 +6,9 @@
 
 #SBATCH --job-name=xdd		  # Assign a short name to your job
 
-#SBATCH --mem=128000		  # Real memory (RAM) required (MB)
+#SBATCH --mem=16000		  # Real memory (RAM) required (MB)
 
-#SBATCH --time=08:00:00           # Total run time limit (HH:MM:SS)
+#SBATCH --time=02:00:00           # Total run time limit (HH:MM:SS)
 
 #SBATCH --nodes=1                 # Number of nodes you require
 
@@ -22,7 +22,7 @@
 
 #SBATCH --constraint=cascadelake
 
-cd /scratch/jk1849/log1p
+cd /scratch/jk1849/rlibm-log1p-all
 module purge
 module load gcc
 module load intel
@@ -32,6 +32,6 @@ export LIBRARY_PATH=$LD_LIBRARY_PATH
 export CPLUS_INCLUDE_PATH=/home/jk1849/include
 export C_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
 
-rm main
-make main
-srun ./main
+rm test
+make test
+srun ./test

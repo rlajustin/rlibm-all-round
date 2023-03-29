@@ -16,7 +16,7 @@ double Oracle34(float f)
 	mpfr_init2(x,250);
 
 	if (f == 1.0/0.0) return 1.0/0.0;
-	if (f == 0) return -1.0/0.0;
+	if (f == -1.0) return -1.0/0.0;
 
 	int sticky = 0;
 	// Set float value to mpfr. This should be exact
@@ -28,7 +28,7 @@ double Oracle34(float f)
 	return FromMPFRToFloat34Ro(x, sticky); 
 }
 
-ul round(ul x)
+ul round_to_sticky(ul x, bool minus)
 {
 	int sticky = 0;
 	if(x&0x7fffffff>0) sticky = 1;
@@ -45,7 +45,8 @@ int main(int argc, char** argv)
 		exit(0);
 	}
 
-	for(unsigned int i=0x0;i<0xbf800000;i++)
+	//for(unsigned int i=0x0;i<0xbf800000;i++)
+	for(unsigned int i=0x0;i<0x10;i++)
 	{
 		Float f;
 		f.x = i;
@@ -53,15 +54,20 @@ int main(int argc, char** argv)
 		oracle.d = Oracle34(f.f);
 		Double d;
 		d.d = (double)f.f;
-		d.d -= (double)(f.f * f.f);
-		d.x = round(d.x);
+		double extra = (double)f.f * f.f;
+		d.d -= extra;
+		d.x = round_to_sticky(d.x, true);
+		
 		int eq = (d.x==oracle.x);
-		if(eq==0)
+
+		/*if(eq==0)
 		{
 			printf("last working index: %x\n", i-1);
 			break;
 		}
-		if(i%0x10000==0) printf("prog: %d", i/0x10000);
+		*/
+		//if(i%0x10000==0) printf("prog: %d", i/0x10000);
+		printf("in: %x, oracle: %lx, out: %lx, same: %d\n", f.x, oracle.x, d.x, eq);
 	}
 }
 
