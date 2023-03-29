@@ -28,6 +28,15 @@ double Oracle34(float f)
 	return FromMPFRToFloat34Ro(x, sticky); 
 }
 
+ul round(ul x)
+{
+	int sticky = 0;
+	if(x&0x7fffffff>0) sticky = 1;
+	x &= 0xffffffff00000000;
+	if(sticky) x |= 0x40000000;
+	return x;
+}
+
 int main(int argc, char** argv)
 {
 	if(argc != 1)
@@ -44,7 +53,8 @@ int main(int argc, char** argv)
 		oracle.d = Oracle34(f.f);
 		Double d;
 		d.d = (double)f.f;
-		d.x -= (double)(f.f * f.f);
+		d.d -= (double)(f.f * f.f);
+		d.x = round(d.x);
 		int eq = (d.x==oracle.x);
 		if(eq==0)
 		{
