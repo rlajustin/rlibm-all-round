@@ -28,10 +28,10 @@ double Oracle34(float f)
 	return FromMPFRToFloat34Ro(x, sticky); 
 }
 
-ul round_to_sticky(ul x, bool minus)
+ul round_to_sticky(ul x, bool special)
 {
 	int sticky = 0;
-	if(x&0x7fffffff>0) sticky = 1;
+	if((x&0x7fffffff)>0) sticky = 1;
 	x &= 0xffffffff00000000;
 	if(sticky) x |= 0x40000000;
 	return x;
@@ -46,7 +46,7 @@ int main(int argc, char** argv)
 	}
 
 	//for(unsigned int i=0x0;i<0xbf800000;i++)
-	for(unsigned int i=0x0;i<0x10;i++)
+	for(unsigned int i=0x24b504f3;i<0x24b50503;i++)
 	{
 		Float f;
 		f.x = i;

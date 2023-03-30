@@ -1,0 +1,1 @@
+max (inclusive) values for floats such that f-f^2 = f: 24b504f3 and a4b504f3

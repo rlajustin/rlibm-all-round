@@ -6,5 +6,8 @@ main:
 test:
 	g++ -o test test.cpp -L/home/jk1849/include -lmpfr -lgmp
 
+dumb:
+	g++ -o dumb dumb.cpp
+
 clean:
 	rm main test
