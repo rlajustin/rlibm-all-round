@@ -1,13 +1,7 @@
 all: main
 
-main:
-	g++ -o main main.cpp -L/home/jk1849/include -lmpfr -lgmp
+oracle:
+	g++ -o oracle oracle.cpp -lmpfr -lgmp
 
-test:
-	g++ -o test test.cpp -L/home/jk1849/include -lmpfr -lgmp
-
-dumb:
-	g++ -o dumb dumb.cpp
-
-clean:
-	rm main test
+interval:
+	g++ -o interval interval.cpp -lmpfr -lgmp
