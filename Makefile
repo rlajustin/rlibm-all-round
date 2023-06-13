@@ -10,6 +10,9 @@ all:
 test:
 	g++ -o test test.cpp -lmpfr -lgmp
 
+roundingtest:
+	g++ -o roundingtest roundingtest.cpp -lmpfr -lgmp
+
 oracle:
 	g++ -o oracle oracle.cpp -lmpfr -lgmp
 

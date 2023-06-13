@@ -28,30 +28,15 @@ double roundto34bit(double d)
 	return ret.d;
 }
 
-double smallvals(float f)
+double rlibm34_log1p(float x)
 {
-	Double val;
-	Float fl;
-	fl.f=f;
-	fl.x--;
-	val.d = (double)f;
-	val.x--;
-	int exp = (val.x&0x7FF0000000000000) >> 52;
-	exp -= 1023;
-	int precbits = 1+11+25;
-	if(exp<-126)
-	{
-		precbits += (exp+126);
-	}
-	val.x &= (0xFFFFFFFFFFFFFFFF<<(64-precbits));
-	return val.d;
+	Float fix, fit;
+	fix.f = x;
+	int m = 0;
+	Double d;
+	d.d=(double)x;
+	if(x==0.0) return 0.0;
+	
 }
-
-/*
-double rlibm_reduce_input(float x)
-{
-	Float fit;	
-}
-*/
 
 #endif
