@@ -21,9 +21,9 @@ bool ComputeSpecialCase(float x, float& res)
     } else if (fx.x == 0xbf800000) {
 	res = 0xff800000;
 	return true;
-    } else if (fx.x <= 0x327fffff) { // log1p(x)=x
+    } else if (fx.x <= 0x33b504f3) { // log1p(x)=x
 	return true;
-    } else if (fx.x >= 0x80000000 and fx.x <= 0xa4ffffff) { // log1p(x)=x
+    } else if (fx.x >= 0x80000000 and fx.x <= 0xb3b504f2) { // log1p(x)=x
 	return true;
     } else if (fx.x > 0xbf800000) { // x < -1.0
 	fx.x = 0xFFFFFFFF;
