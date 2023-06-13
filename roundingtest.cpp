@@ -89,7 +89,7 @@ int main(int argc, char** argv)
 		if(oracle!=rounded34)
 		{
 			printf("last working index: %ld\n", i-1);
-			fesetround(originalRounding);
+			fesetround(original);
 			return 0;
 		}
 		if(i%0x100000==0) printf("progress: %ld/%ld\n", i/0x100000, 0x100000/0x100000000);
