@@ -112,7 +112,7 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
 
             // 1. Find out how many precision bits we will have
             long exp;
-            double fr = mpfr_get_d_2exp(&exp, mval, MPFR_RNDN);
+            double fr = mpfr_get_d_2exp(&exp, mval, MPFR_RNDZ);
             long origExp = exp;
             fr *= 2;
 	    exp--;
@@ -129,12 +129,13 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
             Double dx;
             dx.d = mpfr_get_d(r, MPFR_RNDZ);
            
-	    printf("%e\n", dx.d);
+	    //printf("%e\n", dx.d);
 
             // 4. Add "sticky bit" to the numPrec-th bit
             // Let's say we have 13 precision bits.
             // seee eeee eeee xxxx xxxx xxxx ____ ____ ____ ____ ____ ____ ____ ____ ____ ____
-            // 1 << 39 (53 - 13)
+            // 1 << 39 (52 - 13)
+	    //printf("numprec: %d\n", numPrec);
             if (sticky) dx.x |= (1L << (53L - numPrec));
             mpfr_clear(r);
             return dx.d;
@@ -183,6 +184,7 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
             ldexpVal = ldexp(-1.0, -150);
             retVal = ldexp(-1.0, -151);
             cmp = mpfr_cmp_d(mval, ldexpVal);
+	    //printf("compare: %d\n", cmp);
             if (cmp > 0) return retVal;
             
             // 1000 0000 0000 0000 0000 0000 0000 0000 10 = -2^-150
@@ -209,7 +211,7 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
             
             // 1. Find out how many precision bits we will have
             long exp;
-            double fr = mpfr_get_d_2exp(&exp, mval, MPFR_RNDN);
+            double fr = mpfr_get_d_2exp(&exp, mval, MPFR_RNDZ);
             long origExp = exp;
             fr *= 2;
             exp--;
@@ -230,7 +232,7 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
             // Let's say we have 13 precision bits.
 	    // Then since it's denormal in 34-bit representation, double rep has 12 mantissa bits.
             // seee eeee eeee xxxx xxxx xxxx ____ ____ ____ ____ ____ ____ ____ ____ ____ ____
-            // 1 << 39 (53 - 13)
+            // 1 << 39 (52 - 13)
             if (sticky) dx.x |= (1L << (53L - numPrec));
             mpfr_clear(r);
             return dx.d;
@@ -256,6 +258,17 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
     if (sticky) dx.x |= (1L << 27L);
     mpfr_clear(r);
     return dx.d;
+}
+
+double MPFR34Log1p(float f)
+{
+        mpfr_t x;
+        mpfr_init2(x,200);
+        mpfr_set_flt(x,f,MPFR_RNDN);
+        int sticky = 0;
+        int status = mpfr_log1p(x,x,MPFR_RNDZ);
+        if(status!=0) sticky = 0x1;
+        return FromMPFRToFloat34Ro(x, sticky);
 }
 
 unsigned long doubleTo34Bit(double d)

@@ -277,18 +277,6 @@ double lnF[128] = {
     6.8923328123880889251040571252815425395965576171875000000000000000000000e-01
 };
 
-
-double MPFR34Log1p(float f)
-{
-	mpfr_t x;
-	mpfr_init2(x,200);
-	mpfr_set_flt(x,f,MPFR_RNDN);
-	int sticky = 0;
-	int status = mpfr_log1p(x,x,MPFR_RNDZ);
-	if(status!=0) sticky = 0x1;
-	return FromMPFRToFloat34Ro(x, sticky);
-}
-
 void CalculateInterval(double x, double& lb, double& ub) {
 	
 	unsigned long binary = doubleTo34Bit(x);

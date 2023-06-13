@@ -5,30 +5,11 @@
 #include <iostream>
 #include "helper.h"
 #include "stdlib.h"
+#include "log1p.h"
 
 #define ul unsigned long
 
 using namespace std;
-
-double Oracle34(float f)
-{
-	mpfr_t x;
-	mpfr_init2(x,200);
-	mpfr_set_flt(x, f, MPFR_RNDN);
-	int sticky = 0;
-	int status = mpfr_log1p(x,x,MPFR_RNDZ);
-	if (status != 0) sticky |= 0x1;
-	return FromMPFRToFloat34Ro(x, sticky); 
-}
-
-double minus1Ulp(double d)
-{
-	Double dx;
-	dx.d = d;
-	dx.x--;
-	unsigned long result = doubleTo34Bit(dx.d);
-	return bin34ToDouble(result);
-}
 
 int main(int argc, char** argv)
 {
@@ -38,23 +19,28 @@ int main(int argc, char** argv)
 		exit(0);
 	}
 
-	//for(unsigned int i=0x0;i<0xbf800000;i++)
-	for(unsigned int i=0x2;i<0x3f800000;i++)
+	for(unsigned int i=0x80000001;i<0xbf800000;i++)
+	//for(unsigned int i=0x1;i<0x3f800000;i++)
 	{
 		Float f;
 		f.x = i;
-		double oracle = Oracle34(f.f);
-		double x = (double)f.f; //-(double)f.f*f.f;
-		double rlibm = minus1Ulp(x);
-		printf("oracle: %.20e, rlibm: %.20e\n", oracle, rlibm);
-		printf("hmmge: %lx\n", doubleTo34Bit(oracle));
+		double oracle = MPFR34Log1p(f.f);
+		Double d, dd;
+		d.d = (double)f.f;
+		if(i>0x80000000) d.x++;
+		else d.x--;
+		double rlibm = roundto34bit(d.d);
+		d.d=rlibm;
+		dd.d = oracle;
+		//printf("input: %.20e, oracle: %.20e, rlibm: %.20e\n", f.f, oracle, rlibm);
+		//printf("hex: %llx, %llx\n", dd.x, d.x);
 		if(oracle!=rlibm)
 		{
 			printf("last working index: %x\n", i-1);
 			break;
 		}
 		
-		if(i%0x10000==0) printf("prog: %d/%d\n", i/0x10000,0x3f800000/0x10000);
+		if(i%0x10000==0) printf("prog: %d/%d\n", (i-0x80000000)/0x10000,0x3f800000/0x10000);
 		//printf("in: %x, oracle: %lx, out: %lx, same: %d\n", f.x, oracle.x, d.x, eq);
 	}
 }
