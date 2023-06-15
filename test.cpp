@@ -25,13 +25,7 @@ int main(int argc, char** argv)
 		Float f;
 		f.x = i;
 		double oracle = MPFR34Log1p(f.f);
-		Double d, dd;
-		d.d = (double)f.f;
-		if(i>0x80000000) d.x++;
-		else d.x--;
-		double rlibm = roundto34bit(d.d);
-		d.d=rlibm;
-		dd.d = oracle;
+		double rlibm = rlibm34_log1p(f.f);
 		//printf("input: %.20e, oracle: %.20e, rlibm: %.20e\n", f.f, oracle, rlibm);
 		//printf("hex: %llx, %llx\n", dd.x, d.x);
 		if(oracle!=rlibm)

@@ -1,10 +1,25 @@
 #ifndef LOG1P_H
 #define LOG1P_H
 
-#include "interval.h"
+#include "constants.h"
 
-double polypositive[] = {};
-double polynegative[] = {};
+double poly_eval(double x){
+	for(int i=0;i<15;i++)
+	{
+		if(x==special[i].x) return special[i].y;
+	}
+	double res = 0.0;
+	double* poly = polynegative;
+	if(x>0.0) poly = polypositive;
+	for(int i=6;i>0;i--)
+	{
+		res += poly[i];
+		res *= x;
+	}
+	res += poly[0];
+	return res;
+
+}
 
 double roundto34bit(double d)
 {
@@ -30,13 +45,35 @@ double roundto34bit(double d)
 
 double rlibm34_log1p(float x)
 {
-	Float fix, fit;
-	fix.f = x;
-	int m = 0;
-	Double d;
-	d.d=(double)x;
-	if(x==0.0) return 0.0;
-	
+	union {float f; unsigned int i;} F = {x};
+	unsigned int ix = F.i;
+	int exp = ((ix & 0x7fffffff) >> 23) - 127;
+	if(ix == 0x7f80000 || x==0.0 || (ix<<1) > 0xff000000) return x;	// positive infinity, log1p(x)=x, NaN
+	else if((ix<<1) <= 0x676a09e4) // warning might add 1 violated input
+	{
+		union {double d; unsigned long long x;} dbl = {x};
+		if(x>0.0) dbl.x--;
+		else dbl.x++;
+		return roundto34bit(dbl.d);
+	}
+	else if(ix >= 0xbf800000)
+	{
+		if(x==-1.0) return x/0.0f;
+		else return (x-x)/0.0f;
+	}
+	else if(exp < -7) return poly_eval((double)x);
+	double val = (double)x + 1.0;
+	union {double d; unsigned long long x;} dbl = {val}, bigF = {val};
+	exp = ((dbl.x & 0x7FFFFFFFFFFFFFFF) >> 52) - 1023;
+	bigF.x |= 0x3FF0000000000000;
+	bigF.x &= 0x3FFFE00000000000;
+	dbl.x  |= 0x3FF0000000000000;
+	dbl.x  &= 0x3FFFFFFFFFFFFFFF;
+	int ind = bigF.x >> 45;
+	val = (dbl.d-bigF.d) * oneByF[ind];
+	bigF.x |= 0x3f800000;
+	double retval=poly_eval(val);
+	return retval + lnF[ind] + (exp * LN2HIGH);
 }
 
 #endif
