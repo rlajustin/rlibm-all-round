@@ -2,8 +2,9 @@
 #define _INTERVAL
 #include "interval.h"
 #include <iostream>
+#include <fenv.h>
 
-#define LO 0x0
+#define LO 0x44B50254 
 #define HI 0x100000000
 
 using namespace std;
@@ -262,6 +263,8 @@ int main(int argc, char** argv)
 	FILE* oraclefile = fopen(argv[1], "r");
 	FILE* fp = fopen(argv[2], "w");
 	fseek(oraclefile, LO*sizeof(double), SEEK_SET);
+	int original = fegetround();
+	fesetround(FE_DOWNWARD);
 	for(unsigned long i=LO;i<HI;i++)
 	{
 		double oracle;
@@ -270,6 +273,7 @@ int main(int argc, char** argv)
 		f.x = i;
 		ComputeReducedInterval(f.f,fp,oracle);
 	}
+	fesetround(original);
 	fclose(fp);
 	fclose(oraclefile);
 
