@@ -45,20 +45,13 @@ double rlibm34_log2(float x)
 
 	double f = fix.f - fit.f;
 	f *= oneByF[FIndex];
-
-	//find index of polynomial
 	
-	union {double d; unsigned long long x;} dX;
-	dX.d = f;
-	unsigned long index = (dX.x & 0x01FFFFFFFFFFFFFFlu) >> 49lu;
-	const double* coeffs = log2coeffs[index];
-
-	double y = coeffs[2];
-	y = multiply(y,f);
-	y = add(y, coeffs[1]);
-	y = multiply(y,f);
-	y = add(y, coeffs[0]);
-	y = multiply(y,f);
+	double y = poly[5];
+	for(int i=4;i>=0;i--)
+	{
+		y = multiply(y, f);
+		y = add(y, poly[i]);
+	}
 
 	y = add(y, logbase2[FIndex]);
 	y = add(y, m);
