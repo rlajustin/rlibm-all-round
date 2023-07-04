@@ -7,7 +7,13 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-	FILE* fp = fopen("oracle_log1p.bin", "a");
+	if(argc!=2)
+	{
+		printf("usage: %s <oracle file>\n", argv[0]);
+		exit(0);
+	}
+
+	FILE* fp = fopen(argv[1], "a");
 	Float fl;
 	float f;
 	double result;

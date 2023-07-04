@@ -43,8 +43,8 @@ double rlibm34_log2(float x)
 	int FIndex = fit.x >> 16;
 	fit.x |= 0x3f800000;
 
-	double f = fix.f - fit.f;
-	f *= oneByF[FIndex];
+	double f = fix.f - fit.f; // exact
+	f = multiply(f, oneByF[FIndex]); // through testing, we find that this can be done normally and still work for all rounding modes
 	
 	double y = poly[5];
 	for(int i=4;i>=0;i--)

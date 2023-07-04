@@ -19,12 +19,6 @@ int main(int argc, char** argv)
 		exit(0);
 	}
 
-	FILE* fp = fopen(argv[1], "r");
-	fseek(fp, LO*sizeof(double), SEEK_SET);
-	
-	int original = fegetround();
-	char* roundmode = argv[2];
-
 	if(strcmp(roundmode,"zero")==0)
 	{
 		fesetround(FE_TOWARDZERO);
@@ -41,6 +35,12 @@ int main(int argc, char** argv)
 	{
 		fesetround(FE_TONEAREST);
 	}
+
+	FILE* fp = fopen(argv[1], "r");
+	fseek(fp, LO*sizeof(double), SEEK_SET);
+	
+	int original = fegetround();
+	char* roundmode = argv[2];
 
 	float oracle, rlibm;
 	double tmp;

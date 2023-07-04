@@ -259,6 +259,7 @@ int main(int argc, char** argv)
 	if(argc!=3)
 	{
 		printf("usage: %s <oracle file> <interval file>\n",argv[0]);
+		exit(0);
 	}
 	FILE* oraclefile = fopen(argv[1], "r");
 	FILE* fp = fopen(argv[2], "w");
