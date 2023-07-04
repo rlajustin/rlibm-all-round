@@ -27,3 +27,5 @@ make test
 To generate the polynomial, we change very little from the RLIBM-all implementation of log2, except that we run interval and polynomial generation in the round-to-zero mode.
 
 The library implementation of this function simulates floating-point operations in the round-to-zero rounding mode, regardless of the machine's rounding mode. This is achieved by looking at the sign of the approximate error of every floating point operation, and decrementing the double value toward zero if necessary.
+
+Values for constants log(F) and 1/F are generated in round-to-nearest and are taken from the RLIBM-ALL library.
