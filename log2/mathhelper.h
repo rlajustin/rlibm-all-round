@@ -2,54 +2,40 @@
 #define MATHHELPER_H
 
 #include <stdbool.h>
-#include <cmath>
+#include <math.h>
 
 typedef union {
 	double d;
 	unsigned long long x;
 } Double;
 
-double multiply(double a, double b)
+static inline double multiply(double a, double b)
 {
 	double x = a*b;
 	Double retval;
 	retval.d = x;
-	double compare = fma(a,b,-x);
-	if(compare<0) retval.x--;
+	Double compare = {fma(a,b,-x)};
+	//handle when compare is positive or negative 0.0
+	retval.x -= (((compare.x ^ retval.x) > 0x8000000000000000) &&
+			((compare.x<<1)!=0x0));
 	return retval.d;
 }
 
-double add(double a, double b)
+static inline double add(double a, double b)
 {
-	double x = a+b;
-	Double retval;
-	retval.d = x;
-	double xtimes2 = retval.d*2.0;
-	double xby2 = retval.d/2.0;
-	if(a>b) // make sure b>a
-	{
-		double tmp = a;
-		a=b;
-		b=tmp;
-	}
-	// perform subtractions that are exactly representable by Sterbenz's lemma
-	bool compare = false; // false means x<=a+b and we are done, true means x>a+b and we are not.
-	if(b<0) // both a and b are negative
-	{
-		compare=(x-a>b);
-	}
-	else // honestly not sure if some of this is legal, TODO fix if I run into an error
-	{
-		if(b<xtimes2) // we know b>xby2 because b>a, so this means x-b is exact by Sterbenz
-		{
-			compare = (x-b>a);
-		}
-		else // by algebraic manipulation, we know that a+b is exactly representable by Sterbenz
-		{
-			compare = false;
-		}
-	}
-	if(compare) retval.x--;
+	union {double d; unsigned long x;} ba = {a}, bb = {b}, retval = {a+b};
+	int alb = ((ba.x & 0x7FFFFFFFFFFFFFFF) < (bb.x & 0x7FFFFFFFFFFFFFFF));
+	unsigned long mask = ba.x ^ bb.x;
+
+	ba.x = ba.x ^ (mask * alb);
+	bb.x = bb.x ^ (mask * alb); 
+
+	ba.d = retval.d - ba.d;
+
+	bb.d -= ba.d;
+
+	retval.x -= (((bb.x ^ retval.x)>0x8000000000000000) &&
+			((bb.x<<1)!=0x0));
 	return retval.d;
 }
 

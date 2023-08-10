@@ -1,10 +1,10 @@
 #ifndef LOG2_C
 #define LOG2_C
 
-#include "constants.h"
-#include "mathhelper.h"
+#include "../constants.h"
+#include "../mathhelper.h"
 #include "math.h"
-#include "log2.h"
+#include "../log2.h"
 
 double rlibm34_log2(float x)
 {
@@ -45,16 +45,33 @@ double rlibm34_log2(float x)
 
 	double f = fix.f - fit.f; // exact
 	f = multiply(f, oneByF[FIndex]); // through testing, we find that this can be done normally and still work for all rounding modes
-	
-	double y = poly[5];
-	for(int i=4;i>=0;i--)
-	{
-		y = multiply(y, f);
-		y = add(y, poly[i]);
-	}
+	//double f2 = f*f;
 
-	y = add(y, logbase2[FIndex]);
-	y = add(y, m);
+	union {double d; unsigned long x;} dX = {f};
+	unsigned long index = (dX.x & 0x01FFFFFFFFFFFFFFlu) >> 49lu;
+	const double* coeffs = log2coeffs[index];
+
+	/*
+	double y = multiply(coeffs[2], f);
+	double tmp = multiply(coeffs[0], f);
+	double extra = add(logbase2[FIndex], m);
+
+	y = add(y, coeffs[1]);
+	tmp = add(tmp, extra);
+
+	y = multiply(y, f2);
+	
+	y = add(y, tmp);
+	*/
+
+	double extra = add(logbase2[FIndex], m);
+	double y = multiply(coeffs[2],f);
+
+	y = add(y, coeffs[1]);
+	y = multiply(y, f);
+	y = add(y, coeffs[0]);
+	y = multiply(y, f);
+	y = add(y, extra);
 
 	return y;
 }
