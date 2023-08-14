@@ -1,4 +1,6 @@
-# rlibm-log1p-all
+# rlibm-all-round
+
+Log1p is currently not correct for all rounding modes.
 
 ## log2
 
