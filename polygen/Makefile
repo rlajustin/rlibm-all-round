@@ -1,11 +1,11 @@
 SOPLEX_INCLUDE=/common/home/jk1849/soplex-4.0.1/src
 SOPLEX_LIB=/common/home/jk1849/soplex-4.0.1/build/lib/libsoplex.a
 
-# run on local machine
-# SOPLEX_INCLUDE=/Users/justinkim/rlibm/polygen/build/src
-# SOPLEX_LIB=/Users/justinkim/rlibm/polygen/build/lib/libsoplex.a
+all: piecewise 
 
-all:
+piecewise: rlibm-fast.h piecewise.cpp
+	g++ -g -O2 -I$(SOPLEX_INCLUDE) -std=c++11 piecewise.cpp  $(SOPLEX_LIB) -o piecewise -lgmp -lz -lm	
 
-polygen:
-	g++ -O2 -I$(SOPLEX_INCLUDE) -std=c++14 polygen.cpp $(SOPLEX_LIB) -o polygen -lgmp -lz -lm
+clean:
+	rm -f *~ piecewise
+

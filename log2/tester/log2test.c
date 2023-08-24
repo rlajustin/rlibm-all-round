@@ -1,7 +1,7 @@
 #ifndef LOG2TEST_C
 #define LOG2TEST_C
 #include <stdio.h>
-#include "log2.c"
+#include "../log2.c"
 #include <x86intrin.h>
 #include <stdlib.h>
 #include <fenv.h>

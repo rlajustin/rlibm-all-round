@@ -71,7 +71,7 @@ double OutputCompensation(float x, double yp) {
 
 	fit.x = fix.x & 0x007F0000;
 	int FIndex = fit.x >> 16;
-	return yp + lnF[FIndex] + m * LN2HIGH;
+	return yp + lnF[FIndex] + m * LN;
 }
 
 void GuessInitialLbUb(float x, double roundingLb, double roundingUb,
