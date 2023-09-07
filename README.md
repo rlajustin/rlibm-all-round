@@ -1,8 +1,8 @@
 # rlibm-all-round
 
-Log1p is currently not correct for all rounding modes.
+This repo contains functions for logf, log2f, and log10f that are correctly rounded for all rounding modes.
 
-## log2
+## Generation
 
 To run the oracle generator use
 ```
@@ -19,15 +19,10 @@ To run polynomial generator use
 make polygen
 ./polygen <interval file>
 ```
-To test implementation use test
-```
-make test
-./test <oracle file> <zero|up|down|nearest>
-```
 
 ### Changes from standard RLIBM implementation
-To generate the polynomial, we change very little from the RLIBM-all implementation of log2, except that we run interval and polynomial generation in the round-to-zero mode.
+To generate the polynomial, we change very little from the RLIBM-ALL approach, except that we run interval and polynomial generation in the round-to-zero mode.
 
-The library implementation of this function simulates floating-point operations in the round-to-zero rounding mode, regardless of the machine's rounding mode. This is achieved by looking at the sign of the approximate error of every floating point operation, and decrementing the double value toward zero if necessary.
+The library implementation of these functions simulates floating-point operations in the round-to-zero rounding mode, regardless of the machine's rounding mode. This is achieved by looking at the sign of the approximate error of every floating point operation, and decrementing the double value toward zero if necessary.
 
-Values for constants log(F) and 1/F are generated in round-to-nearest and are taken from the RLIBM-ALL library.
+Values for constants were generated in round-to-zero using the MPFR oracle.
