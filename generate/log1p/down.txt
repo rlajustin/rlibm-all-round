@@ -1,0 +1,17 @@
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is -0x1.fffffep-8
+violated_input is -0x1.1fff94p-16, lb is -0x1.200035fffffffp-16, ub is -0x1.2000350000001p-16
+violated_input is -0x1.dfff6ap-17, lb is -0x1.e0004afffffffp-17, ub is -0x1.e0004a0000001p-17
+violated_input is -0x1.7fffap-17, lb is -0x1.80002ffffffffp-17, ub is -0x1.80002f0000001p-17
+violated_input is -0x1.1fffcap-17, lb is -0x1.20001afffffffp-17, ub is -0x1.20001a0000001p-17
+violated_input is -0x1.7fffdp-18, lb is -0x1.800017fffffffp-18, ub is -0x1.8000170000001p-18
+violated_input is -0x1.7fffe8p-19, lb is -0x1.80000bfffffffp-19, ub is -0x1.80000b0000001p-19
+violated_input is -0x1.7ffff4p-20, lb is -0x1.800005fffffffp-20, ub is -0x1.8000050000001p-20
+violated_input is -0x1.7ffffap-21, lb is -0x1.800002fffffffp-21, ub is -0x1.8000020000001p-21
+violated_input is 0x1.7e9a895da895cp-11, lb is 0x1.7e76d0b79p-11, ub is 0x1.7e7710b78fbffp-11
+violated_input is 0x1.af4aaaaaaaaaap-10, lb is 0x1.aeeff093588p-10, ub is 0x1.aeeff187ccfffp-10
+violated_input is 0x1.858f145145144p-9, lb is 0x1.84fb2c49ac4p-9, ub is 0x1.84fb3049ac2ffp-9
+violated_input is 0x1.9e2f5d75d75d6p-9, lb is 0x1.9d883049ac4p-9, ub is 0x1.9d883449ac2ffp-9
+violated_input is 0x1.ebbc104104103p-9, lb is 0x1.ead08449ac4p-9, ub is 0x1.ead08849ac2ffp-9
+Polynomial: y=0x1.0000000000001p+0 x^(1) + -0x1.ffffffffff6a3p-2 x^(2) + 0x1.5555555b27cacp-2 x^(3) + -0x1.000005eaf17f9p-2 x^(4) + 0x1.99975554202e5p-3 x^(5) + -0x1.504e880535f9cp-3 x^(6)
+

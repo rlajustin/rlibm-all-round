@@ -1,0 +1,5 @@
+starting input is 0x0p+0
+violated_input is 0x1.57497b425ed09p-9, lb is 0x1.56d6991a2fep-9, ub is 0x1.56d6da8bafdffp-9
+violated_input is 0x1.e8a1fd1b7af01p-9, lb is 0x1.e7b9668c4bp-9, ub is 0x1.e7b9e96f4afffp-9
+Polynomial: y=0x1.ffffffffb9b65p-1 x^(1) + -0x1.fffffce4ddf6ap-2 x^(2) + 0x1.5550131c233eep-2 x^(3) + -0x1.f8f5d100b5786p-3 x^(4)
+
