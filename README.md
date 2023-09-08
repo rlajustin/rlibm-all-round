@@ -16,8 +16,8 @@ make interval
 ```
 To run polynomial generator use
 ```
-make polygen
-./polygen <interval file>
+make piecewise
+./piecewise <interval file>
 ```
 
 ### Changes from standard RLIBM implementation
