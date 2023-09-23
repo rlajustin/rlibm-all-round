@@ -1,5 +1,5 @@
-#ifndef LOG1PF_C
-#define LOG1PF_C
+#ifndef LOG1P_C
+#define LOG1P_C
 
 #include "constants.h"
 #include "mathhelper.h"

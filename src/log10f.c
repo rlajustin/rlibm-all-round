@@ -1,8 +1,8 @@
 #ifndef LOG10_C
 #define LOG10_C
 
-#include "../include/constants.h"
-#include "../include/mathhelper.h"
+#include "constants.h"
+#include "mathhelper.h"
 #include "math.h"
 
 double rlibm34_log10(float x)

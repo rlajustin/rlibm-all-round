@@ -1,8 +1,8 @@
 #ifndef LOG2_C
 #define LOG2_C
 
-#include "../include/constants.h"
-#include "../include/mathhelper.h"
+#include "constants.h"
+#include "mathhelper.h"
 #include "math.h"
 
 static double coeffs[] = {

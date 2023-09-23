@@ -10,10 +10,10 @@
 #include<memory>
 #include<random>
 
-#define MAX_TRIES 100
-#define VIOLATE_THRESHOLD 8
+#define MAX_TRIES 50
+#define VIOLATE_THRESHOLD 20
 #define SAMPLE_MATCH_THRESHOLD 20
-#define MAX_ITERATIONS 1500
+#define MAX_ITERATIONS 5000
 #define N_RLIBM_PIECES 1
 
 

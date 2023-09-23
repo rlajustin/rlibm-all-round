@@ -1,8 +1,8 @@
 #ifndef LOGF_C
 #define LOGF_C
 
-#include "../include/constants.h"
-#include "../include/mathhelper.h"
+#include "constants.h"
+#include "mathhelper.h"
 #include "math.h"
 
 double rlibm34_log(float x)

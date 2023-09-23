@@ -1,7 +1,7 @@
-#ifndef LOG10TEST_C
-#define LOG10TEST_C
+#ifndef LOGTEST_C
+#define LOGTEST_C
 #include <stdio.h>
-#include "log10f.c"
+#include "log1p.c"
 #include <x86intrin.h>
 #include <stdlib.h>
 #include <fenv.h>
@@ -26,7 +26,7 @@ void RunTest(FILE* fp, FILE* oracle) {
 
 		do {
 			t1 = __rdtscp(&dummy);
-			res = rlibm34_log10(x);
+			res = rlibm34_log1p(x);
 			t2 = __rdtscp(&dummy);
 		} while(t2 <= t1);
 
@@ -35,8 +35,8 @@ void RunTest(FILE* fp, FILE* oracle) {
 		totalTime += (t2-t1);
 		if(res != oracleval && oracleval == oracleval)
 		{
-			printf("wrong rlibm: %.20e, oracle: %.20e\n", res, oracleval);
-			printf("wrontg input: %lx\n", count);
+			//printf("wrong rlibm: %.20e, oracle: %.20e\n", res, oracleval);
+			printf("wrong input: %lx\n", count);
 			someCount++;
 		}
 	}

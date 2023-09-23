@@ -1,11 +1,15 @@
 #include <string>
 #include <queue>
 #include <map>
-#include "interval.h"
 
 #define ul unsigned long
 
 using namespace std;
+
+typedef struct IInterval{
+        double lo;
+        double hi;
+} Interval;
 
 int fileIndex = 0;
 

@@ -113,6 +113,7 @@ double rlibm_horner_evaluation(double x, polynomial* poly){
 
 
 double rlibm_poly_evaluation(double x, polynomial* poly){
+	return rlibm_horner_evaluation(x, poly);
 
 	if(poly->power[0] == 0){
 
@@ -168,6 +169,7 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 		return  rlibm_horner_evaluation(x, poly);
 	}
 
+	
 	if(poly->power[0] == 1){
 		// log with powers {1, 2, 3,4,5}
 		if(poly->termsize == 1){
@@ -230,6 +232,7 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 
 			//     return x*poly->coeffs[0] + x^2*(poly->coeffs[1] + x^3*poly->coeffs[2] + x^4*(poly->coeffs[3] + x^5*poly->coeffs[4]));
 		} else if(poly->termsize == 6){
+		/*	
 			double xsquare = x* x;
 			double temp1 = fma(x, poly->coeffs[4], poly->coeffs[3]);
 			double temp2 = fma(xsquare, poly->coeffs[5], temp1);
@@ -238,8 +241,37 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 			double temp4 = fma(xsquare, temp2, temp3);
 			double temp5 = xsquare * temp4;
 			return fma(x, poly->coeffs[0], temp5);
+*/
+	//		return rlibm_horner_evaluation(x, poly);
+/*
+			double xsquare = x * x;
 
+			double tmp1 = poly->coeffs[4]*x;
+			double tmp2 = poly->coeffs[2]*x;
 
+			double tmp3 = poly->coeffs[5]*xsquare;
+			double tmp4 = tmp1 + poly->coeffs[3];
+			double tmp5 = tmp2 + poly->coeffs[1];
+
+			double tmp1 = x * poly->coeffs[5]; //c6x
+			double tmp2 = x * poly->coeffs[3]; //c4x
+
+			double tmp3 = tmp1 + poly->coeffs[4]; //c6x+c5
+
+			double xfour = xsquare * xsquare;
+			double tmp4 = tmp3 * x; //c6x2+c5x
+			double tmp5 = tmp2 + poly->coeffs[1]; //c4x+c3
+
+			double tmp6 = tmp4 * xfour; //c6x6+c5x5+c4x4
+			double tmp7 = tmp5 * x; //c3x2+c2x
+
+			double tmp8 = tmp6 * xfour; //c6x6+c5x5+c4x4
+			double tmp9 = tmp5 + poly->coeffs[0]; //c3x2+c2x+c1
+
+			double tmp10 = tmp9 * x; //c3x3+c2x2+c1x
+
+			return tmp8 + tmp10;
+*/
 			//   return x*poly->coeffs[0] + x*x*(poly->coeffs[1] + x*poly->coeffs[2] + x*x*(poly->coeffs[3] + x*poly->coeffs[4] + x*x*poly->coeffs[5]));
 		} else if(poly->termsize == 7){
 			double xsquare = x * x;
@@ -403,7 +435,7 @@ void rlibm_evaluate_and_update_weights(size_t* violated_indices, size_t num_viol
 		w_v = w_v + intervals[violated_indices[i]].w;
 	}
 
-	//doubling the weights for a lucky iteration
+	//doubling the weights for a lucky iteation
 	if(w_v <= 2 * w_s / (9*d -1)){
 		for(size_t i = 0; i < num_violated_indices; i++){
 			size_t vindex = violated_indices[i];
@@ -514,10 +546,13 @@ int main(int argc, char** argv){
 	printf("EXIT_ON_THRESHOLD is %d\n", RLIBM_EXIT_ON_THRESHOLD);
 
 
-	int MY_RLIBM_PIECES = 3;
-	double ratios[] = {0.4, 0.2, 0.4};
-	int powers[] = {1, 2, 3, 4};
-	int powers_size = 4;
+	int MY_RLIBM_PIECES = 1;
+	//double ratios[] = {0.50, 0.15, 0.35}; // log
+	//double ratios[] = {0.325, 0.25, 0.125, 0.3}; // log10
+	//double ratios[] = {1.0}; // log1p up
+	double ratios[] = {1.0}; // log1p down
+	int powers[] = {1, 2, 3, 4, 5, 6};
+	int powers_size = 6;
 
 	size_t nentries_total = 0;
 	interval_data* intervals_full = rlibm_read_interval_file(argv[1], &nentries_total);

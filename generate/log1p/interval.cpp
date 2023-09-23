@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "constants.h"
+#include "helper.h"
 
 #define LO 0x0
 #define HI 0x100000000
@@ -43,36 +44,32 @@ bool ComputeSpecialCase(float x, float& res)
 		fx.x = 0x7FFFFFFF;
 		res = fx.f;
 		return true;
-	}/* else if (fx.x >= 0x56000000 and fx.x < 0x80000000) { // log1p(x)=log(x)
+	} else if ((fx.x & 0x7FFFFFFF) < 0x3c000000) { // directly computed
 		return true;
-	}
-*/
+	} else if (fx.x >= 0x56000000 and fx.x < 0x80000000) { // log1p(x)=log(x)
+		return true;
+	} /*else if ((fx.x & 0x7FFFFFFF) >= 0x3c000000) {
+		return true;
+	}*/
 	return false;
 }
 
 double RangeReduction(float x) {
-	Float fix, fit;
+	Float fix, F;
 	fix.f = x;
-
+	
 	int m = ((fix.x & 0x7fffffff) >> 23) - 127;
-
 	if(m < -7) return x;
-	double round = (double)x;
-	if(m < 45) round += 1.0;
 
-	Double d, p1;
-	p1.d = round;
-	d.d = round;
-	d.x |= 0x3ff0000000000000;
-	d.x &= 0x3fffe00000000000;
-	p1.x|= 0x3ff0000000000000;
-	p1.x&= 0x3fffffffffffffff;
-	double f = p1.d - d.d;
+	fix.x &= 0x007fffff;
+	fix.x |= 0x3f800000;
 
-	p1.x &= 0x000fe00000000000;
-	int findex = p1.x >> 45;
-
-	return f*oneByF[findex];
+	F.x = fix.x & 0x007f0000;
+	int FIndex = F.x >> 16;
+	F.x |= 0x3f800000;
+	double f = fix.f - F.f;
+	return f * oneByF[FIndex];
+	
 }
 
 double OutputCompensation(float x, double yp) {
