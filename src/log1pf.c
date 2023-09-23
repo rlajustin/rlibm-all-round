@@ -78,7 +78,7 @@ double rlibm34_log1p(float x)
 			y = multiply(tmp6, f);
 		}
 	}
-	else {
+	else { // work on this piece more, can reduce number of violated
 		val = add(val, 1.0);
 		union {double d; unsigned long long x;} dbl = {val}, bigF = {val};
 		exp = ((dbl.x & 0x7FFFFFFFFFFFFFFF) >> 52) - 1023;
