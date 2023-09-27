@@ -1,6 +1,6 @@
 # rlibm-all-round
 
-This repo contains functions for logf, log2f, and log10f that are correctly rounded for all rounding modes.
+This repo contains functions for logf, log2f, log10f, and log1pf that are correctly rounded for all rounding modes.
 
 ## Generation
 
