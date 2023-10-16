@@ -1,11 +1,11 @@
-#ifndef LOG10_C
-#define LOG10_C
+#ifndef LOG10F_C
+#define LOG10F_C
 
 #include "constants.h"
 #include "mathhelper.h"
 #include "math.h"
 
-double rlibm34_log10(float x)
+double rlibm34_log10f(float x)
 {
 	union {float f; unsigned int x;} fix = {x};
 	int m = 0;

@@ -4,6 +4,75 @@
 #define ONEBYLN2 0x1.71547652b82fep+0
 #define LOG102HIGH 0x1.34413509f79fep-2
 #define LOG102LOW  0x1.e623e2566b02dp-55
+#define LGEX64 0x1.71547652b82fep+6
+#define ONEBY64LGE 0x1.62e42fefa39efp-7
+
+double exp2JBy64[64] = {
+	0x1p+0,
+	0x1.02c9a3e77806p+0,
+	0x1.059b0d3158574p+0,
+	0x1.0874518759bc8p+0,
+	0x1.0b5586cf9890fp+0,
+	0x1.0e3ec32d3d1a2p+0,
+	0x1.11301d0125b5p+0,
+	0x1.1429aaea92ddfp+0,
+	0x1.172b83c7d517ap+0,
+	0x1.1a35beb6fcb75p+0,
+	0x1.1d4873168b9aap+0,
+	0x1.2063b88628cd6p+0,
+	0x1.2387a6e756238p+0,
+	0x1.26b4565e27cddp+0,
+	0x1.29e9df51fdee1p+0,
+	0x1.2d285a6e4030bp+0,
+	0x1.306fe0a31b715p+0,
+	0x1.33c08b26416ffp+0,
+	0x1.371a7373aa9cap+0,
+	0x1.3a7db34e59ff6p+0,
+	0x1.3dea64c123422p+0,
+	0x1.4160a21f72e29p+0,
+	0x1.44e086061892dp+0,
+	0x1.486a2b5c13cdp+0,
+	0x1.4bfdad5362a27p+0,
+	0x1.4f9b2769d2ca6p+0,
+	0x1.5342b569d4f81p+0,
+	0x1.56f4736b527dap+0,
+	0x1.5ab07dd485429p+0,
+	0x1.5e76f15ad2148p+0,
+	0x1.6247eb03a5584p+0,
+	0x1.6623882552224p+0,
+	0x1.6a09e667f3bccp+0,
+	0x1.6dfb23c651a2ep+0,
+	0x1.71f75e8ec5f73p+0,
+	0x1.75feb564267c8p+0,
+	0x1.7a11473eb0186p+0,
+	0x1.7e2f336cf4e62p+0,
+	0x1.82589994cce12p+0,
+	0x1.868d99b4492ecp+0,
+	0x1.8ace5422aa0dbp+0,
+	0x1.8f1ae99157736p+0,
+	0x1.93737b0cdc5e4p+0,
+	0x1.97d829fde4e4fp+0,
+	0x1.9c49182a3f09p+0,
+	0x1.a0c667b5de564p+0,
+	0x1.a5503b23e255cp+0,
+	0x1.a9e6b5579fdbfp+0,
+	0x1.ae89f995ad3adp+0,
+	0x1.b33a2b84f15fap+0,
+	0x1.b7f76f2fb5e46p+0,
+	0x1.bcc1e904bc1d2p+0,
+	0x1.c199bdd85529cp+0,
+	0x1.c67f12e57d14bp+0,
+	0x1.cb720dcef9069p+0,
+	0x1.d072d4a07897bp+0,
+	0x1.d5818dcfba487p+0,
+	0x1.da9e603db3285p+0,
+	0x1.dfc97337b9b5ep+0,
+	0x1.e502ee78b3ff6p+0,
+	0x1.ea4afa2a490d9p+0,
+	0x1.efa1bee615a27p+0,
+	0x1.f50765b6e454p+0,
+	0x1.fa7c1819e90d8p+0
+};
 
 double oneByF[128] = {
 	0x1p+0,
@@ -529,7 +598,5 @@ double log10F[128] =
 	0x1.30c4478f0835fp-2,
 	0x1.32839e681fc62p-2
 };
-
-
 
 #endif

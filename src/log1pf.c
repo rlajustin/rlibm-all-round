@@ -1,11 +1,11 @@
-#ifndef LOG1P_C
-#define LOG1P_C
+#ifndef LOG1PF_C
+#define LOG1PF_C
 
 #include "constants.h"
 #include "mathhelper.h"
 #include "math.h"
 
-double rlibm34_log1p(float x)
+double rlibm34_log1pf(float x)
 {
 	union {float f; unsigned int x;} fix = {x};
 	double val = (double)x;

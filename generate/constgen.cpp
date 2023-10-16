@@ -28,23 +28,29 @@ int main()
 	fprintf(fp, "%a, %a\n%.30e, %.30e\n", dHIGH, dLOW, dHIGH, dLOW);
 
 */
-	double d = 1.44269504088896338700465094007;
+
+	mpfr_t x;
+	mpfr_init2(x, 200);
+	mpfr_set_d(x, 1.0, MPFR_RNDZ);
+	mpfr_exp(x, x, MPFR_RNDZ);
+	mpfr_log2(x, x, MPFR_RNDZ);
+	double d = mpfr_get_d(x, MPFR_RNDZ);
+	printf("%a\n", d);
+	mpfr_d_div(x, 1.0, x, MPFR_RNDZ);
+	d = mpfr_get_d(x, MPFR_RNDZ);
 	printf("%a\n", d);
 
 /*
 	mpfr_t x;
 	mpfr_init2(x, 200);
-	for(int i=0;i<128;i++)
+	for(int i=0;i<64;i++)
 	{
-		int bin = i<<16;
-		bin |= 0x3f800000;
-		union{float f; unsigned int x;} fl;
-		fl.x = bin;
-		mpfr_set_flt(x, fl.f, MPFR_RNDZ);
-		mpfr_log10(x, x, MPFR_RNDZ);
-		double d = mpfr_get_d(x, MPFR_RNDZ);
-		fprintf(fp, "%a,\n", d);
+		double d = (double)i/64;
+		mpfr_set_d(x, d, MPFR_RNDZ);
+		mpfr_exp2(x, x, MPFR_RNDZ);
+		double ret = mpfr_get_d(x, MPFR_RNDZ);
+		fprintf(fp, "%a,\n", ret);
 	}
-*/
 	fclose(fp);
+*/
 }

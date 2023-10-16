@@ -159,12 +159,14 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 			//return (poly->coeffs[0] + x*poly->coeffs[1]) + x*x*(poly->coeffs[2] + x*poly->coeffs[3] + x*x*poly->coeffs[4]);
 
 		} else if(poly->termsize == 6){
-			double xsquare = x * x;
+			return rlibm_horner_evaluation(x, poly);
+			/*double xsquare = x * x;
 			double temp1 = fma(x, poly->coeffs[1], poly->coeffs[0]);
 			double temp2 = fma(x, poly->coeffs[5], poly->coeffs[4]);
 			double temp3 = fma(x, poly->coeffs[3], poly->coeffs[2]);
 			double temp4 = fma(xsquare, temp2, temp3);
 			return fma(xsquare, temp4, temp1);    
+			*/
 		}
 		return  rlibm_horner_evaluation(x, poly);
 	}
@@ -551,7 +553,7 @@ int main(int argc, char** argv){
 	//double ratios[] = {0.325, 0.25, 0.125, 0.3}; // log10
 	//double ratios[] = {1.0}; // log1p up
 	double ratios[] = {1.0}; // log1p down
-	int powers[] = {1, 2, 3, 4, 5, 6};
+	int powers[] = {0, 1, 2, 3, 4, 5};
 	int powers_size = 6;
 
 	size_t nentries_total = 0;

@@ -1,5 +1,5 @@
-#ifndef LOG2_C
-#define LOG2_C
+#ifndef LOG2F_C
+#define LOG2F_C
 
 #include "constants.h"
 #include "mathhelper.h"
@@ -13,8 +13,7 @@ static double coeffs[] = {
 	0x1.4f5a329d5ba62p-2
 };
 
-
-double rlibm34_log2(float x)
+double rlibm34_log2f(float x)
 {
 	union {float f; unsigned int x;} fix = {x};
 	int m = 0;

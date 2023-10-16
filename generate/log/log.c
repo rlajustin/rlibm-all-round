@@ -5,7 +5,7 @@
 #include "mathhelper.h"
 #include "math.h"
 
-double rlibm34_log(float x)
+double rlibm34_logf(float x)
 {
 	union {float f; unsigned int x;} fix = {x};
 	int m = 0;
