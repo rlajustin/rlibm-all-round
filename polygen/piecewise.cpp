@@ -131,10 +131,20 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 		
 		}
 		else if (poly->termsize == 4){
-			double xsquare = x * x;
+/*			double xsquare = x * x;
 			double temp1 = fma(x, poly->coeffs[3], poly->coeffs[2]);
 			double temp2 = fma(x, poly->coeffs[1], poly->coeffs[0]);
 			return fma(xsquare, temp1, temp2);
+		*/
+			double xsquare = x * x;
+			double tmp1 = poly->coeffs[3]*x;
+			double tmp2 = poly->coeffs[1]*x;
+
+			double tmp3 = tmp1 + poly->coeffs[2];
+			double tmp4 = tmp2 + poly->coeffs[0];
+
+			double tmp5 = tmp3 * xsquare;
+			return tmp5 + tmp4;
 		}    
 		else if(poly->termsize == 5){
 		/*	double xsquare = x * x;
@@ -143,7 +153,7 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 			double temp3 = fma(xsquare, poly->coeffs[4], temp2);
 			return fma(xsquare, temp3, temp1);
 		*/
-			double xsquare = x*x;
+		/*	double xsquare = x*x;
 			double tmp1 = poly->coeffs[1]*x;
 			double tmp2 = poly->coeffs[3]*x;
 			double tmp3 = poly->coeffs[4]*xsquare;
@@ -156,7 +166,8 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 			double tmp8 = tmp4 + tmp6;
 
 			return tmp7 + tmp8;
-			//return (poly->coeffs[0] + x*poly->coeffs[1]) + x*x*(poly->coeffs[2] + x*poly->coeffs[3] + x*x*poly->coeffs[4]);
+		*/	//return (poly->coeffs[0] + x*poly->coeffs[1]) + x*x*(poly->coeffs[2] + x*poly->coeffs[3] + x*x*poly->coeffs[4]);
+			return rlibm_horner_evaluation(x, poly);
 
 		} else if(poly->termsize == 6){
 			return rlibm_horner_evaluation(x, poly);
@@ -548,13 +559,14 @@ int main(int argc, char** argv){
 	printf("EXIT_ON_THRESHOLD is %d\n", RLIBM_EXIT_ON_THRESHOLD);
 
 
-	int MY_RLIBM_PIECES = 1;
+	int MY_RLIBM_PIECES = 4;
 	//double ratios[] = {0.50, 0.15, 0.35}; // log
 	//double ratios[] = {0.325, 0.25, 0.125, 0.3}; // log10
 	//double ratios[] = {1.0}; // log1p up
-	double ratios[] = {1.0}; // log1p down
-	int powers[] = {0, 1, 2, 3, 4, 5};
-	int powers_size = 6;
+	//double ratios[] = {1.0}; // log1p down
+	double ratios[] = {0.2, 0.3, 0.3, 0.2}; // exp10f, expf
+	int powers[] = {0, 1, 2, 3, 4};
+	int powers_size = 5;
 
 	size_t nentries_total = 0;
 	interval_data* intervals_full = rlibm_read_interval_file(argv[1], &nentries_total);

@@ -1,0 +1,28 @@
+EXIT_ON_THRESHOLD is 0
+number of intervals = 504493847
+piece = 0
+start_index = 0
+end_index = 100898769
+nentries=100898769
+Trying to generate a polynomial  with 1 terms 
+Trying to generate a polynomial  with 2 terms 
+Trying to generate a polynomial  with 3 terms 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 1216279, total iterations=1 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 368056, total iterations=2 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 224453, total iterations=3 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 181462, total iterations=4 
+Trying to generate a polynomial  with 4 terms 
+starting input is 0x1.1852a3f57acp-10
+violated_input is 0x1.30dae3b6dap-9, lb is 0x1.015fea9f330fdp+0, ub is 0x1.015feb3913555p+0
+violated_input is 0x1.30deac5272p-9, lb is 0x1.015feec9d3cacp+0, ub is 0x1.015fef9a36fe8p+0
+violated_input is 0x1.4c203a2d14p-9, lb is 0x1.017f7d3455327p+0, ub is 0x1.017f7de1ad714p+0
+violated_input is 0x1.7dd5a004ecp-9, lb is 0x1.01b9140100aaap+0, ub is 0x1.01b914b4126eap+0
+violated_input is 0x1.d924c938acp-9, lb is 0x1.0222fe9de751bp+0, ub is 0x1.0222ff37c7973p+0
+Polynomial: y=0x1.000000000034fp+0 x^(0) + 0x1.26bb1bba92bc9p+1 x^(1) + 0x1.53524e7f34062p+1 x^(2) + 0x1.046dd9f1ccb3cp+1 x^(3) + 0x1.2e98b1aba5db4p+0 x^(4)
+Trying to generate a polynomial  with 5 terms 
+total iterations exceeded 2000, terminating the polynomial geenerator
+Could not generate the polynomial that satisifies all intervals, check for partial results with a few violated intervals

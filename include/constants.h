@@ -7,6 +7,9 @@
 #define LGEX64 0x1.71547652b82fep+6
 #define ONEBY64LGE 0x1.62e42fefa39efp-7
 
+#define LG10X64 0x1.a934f0979a371p+7
+#define ONEBY64LG10 0x1.34413509f79fep-8
+
 double exp2JBy64[64] = {
 	0x1p+0,
 	0x1.02c9a3e77806p+0,

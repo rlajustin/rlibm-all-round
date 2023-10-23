@@ -23,38 +23,32 @@ bool ComputeSpecialCase(float x, float& res)
 {
 	Float fx;
 	fx.f = x;
-	if((fx.x & 0x7FFFFFFF) == 0) return true; // +-0, return 1.0
+	unsigned long sign = (fx.x & 0x80000000) == 0 ? 0x0 : 0x8000000000000000;
+	fx.x &= 0x7FFFFFFF;
+	if((fx.x & 0x7FFFFFFF) == 0) return true; // +-0, return 0
 
-	if(fx.x <= 0x33ffffff) // x small
+	if(fx.x <= 0x39E89768)
 	{
-		if(fx.x <= 0x337fffff) return true; // return 0x1.0000008p+0
-		return true; // return 0x1.0000018p+0
+		return true; // a lot of code to be done
 	}
 
-	if(fx.x >= 0x42b17218 && fx.x <= 0xb3800000)
+	if(fx.x >= 0x42B2D4FD)
 	{
-		if(fx.x < 0x80000000) {
-			if(fx.x <= 0x7f800000) return true; // return 0x1.ffffff8p+127 (inf - 1)
-			if(fx.x == 0x7f800000) return true; //return 1.0/0.0
-			return true; //return 0.0/0.0
+		if(fx.x > 0x7F800000) return true; // 0.0/0.0
+		if(fx.x == 0x7F800000)
+		{
+			if(x > 0.0f) return true; // 1.0/0.0
+			else return true; // -1.0/0.0
 		}
-
-		if(fx.x <= 0xb3000000) return true; //return 0x1.ffffff8p-1
-		return true; // return 0x1.fffffe8p-1
-	}
-
-	if(fx.x >= 0xc2cff1b5)
-	{
-		if(fx.x == 0xff800000) return true; //return 0.0
-		else return true; //return 0x1p-151
-		//handle NaN case
+		if(x > 0.0f) return 0x1.ffffff8p+127;
+		else return -0x1.ffffff8p+127;
 	}
 
 	return false;
 }
 
 double RangeReduction(float x) {
-	double xp = x * LGEX64;
+	double xp = x * LG10X64;
 	int N = (int)xp;
 	int N2 = N % 64;
 	if(N2<0) N2 += 64;
@@ -63,12 +57,12 @@ double RangeReduction(float x) {
 	int M = N1/64;
 	int J = N2;
 
-	double R = x - N*ONEBY64LGE;
+	double R = x - N*ONEBY64LG10;
 	return R;
 }
 
 double OutputCompensation(float x, double yp) {
-	double xp = x * LGEX64;
+	double xp = x * LG10X64;
 	int N = (int)xp;
 	int N2 = N % 64;
 	if(N2<0) N2 += 64;
@@ -77,7 +71,7 @@ double OutputCompensation(float x, double yp) {
 	int M = N1/64;
 	int J = N2;
 
-	double R = x - N*ONEBY64LGE;
+	double R = x - N*ONEBY64LG10;
 	Double dY = {exp2JBy64[J]};
 	dY.x += ((uint64_t)M<<52);
 	yp *= dY.d;
@@ -87,7 +81,7 @@ double OutputCompensation(float x, double yp) {
 void GuessInitialLbUb(float x, double roundingLb, double roundingUb,
 		double xp, double& lb, double& ub) {
 	Double tempYp;
-	tempYp.d = exp(xp);
+	tempYp.d = exp10(xp);
 	double tempY = OutputCompensation(x, tempYp.d);
 
 	//printf("%.10e, %.20e, %.20e\n", xp, tempY, exp(x));
