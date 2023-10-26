@@ -28,28 +28,43 @@ int main()
 	   fprintf(fp, "%a, %a\n%.30e, %.30e\n", dHIGH, dLOW, dHIGH, dLOW);
 
 	 */
-	   mpfr_t x;
-	   mpfr_init2(x, 200);
-	   mpfr_set_d(x, 1.0, MPFR_RNDZ);
-	   mpfr_exp10(x, x, MPFR_RNDZ);
-	   mpfr_log2(x, x, MPFR_RNDZ);
-	   double d = mpfr_get_d(x, MPFR_RNDZ);
-	   printf("%a\n", d);
-	   mpfr_d_div(x, 1.0, x, MPFR_RNDZ);
-	   d = mpfr_get_d(x, MPFR_RNDZ);
-	   printf("%a\n", d);
+/*
+	mpfr_t x;
+	mpfr_init2(x, 200);
+	mpfr_set_d(x, 2.0, MPFR_RNDZ);
+	mpfr_log(x, x, MPFR_RNDZ);
+	mpfr_d_div(x, 64.0, x, MPFR_RNDZ);
+	printf("%a\n", mpfr_get_d(x, MPFR_RNDZ));
+	printf("%.20e\n", mpfr_get_d(x, MPFR_RNDZ));
 
-	/*
-	   mpfr_t x;
-	   mpfr_init2(x, 200);
-	   for(int i=0;i<64;i++)
-	   {
-	   double d = (double)i/64;
-	   mpfr_set_d(x, d, MPFR_RNDZ);
-	   mpfr_exp2(x, x, MPFR_RNDZ);
-	   double ret = mpfr_get_d(x, MPFR_RNDZ);
-	   fprintf(fp, "%a,\n", ret);
-	   }
-	   fclose(fp);
-	 */
+	mpfr_set_d(x, 2.0, MPFR_RNDZ);
+	mpfr_log(x, x, MPFR_RNDZ);
+	mpfr_div_d(x, x, 64.0, MPFR_RNDZ);
+	printf("%a\n", mpfr_get_d(x, MPFR_RNDZ));
+	printf("%.20e\n", mpfr_get_d(x, MPFR_RNDZ));
+ */
+	mpfr_t x;
+	mpfr_init2(x, 200);
+	fprintf(fp, "sinh:\n");
+	for(int i=0;i<130;i++)
+	{
+		double d = (double)i;
+		mpfr_set_d(x, 2.0, MPFR_RNDZ);
+		mpfr_log(x, x, MPFR_RNDZ);
+		mpfr_mul_d(x, x, d, MPFR_RNDZ);
+		mpfr_sinh(x, x, MPFR_RNDZ);
+		fprintf(fp, "%a,\n", mpfr_get_d(x, MPFR_RNDZ));
+	}
+	fprintf(fp, "cosh:\n");
+	for(int i=0;i<130;i++)
+	{
+		double d = (double)i;
+		mpfr_set_d(x, 2.0, MPFR_RNDZ);
+		mpfr_log(x, x, MPFR_RNDZ);
+		mpfr_mul_d(x, x, d, MPFR_RNDZ);
+		mpfr_cosh(x, x, MPFR_RNDZ);
+		fprintf(fp, "%a,\n", mpfr_get_d(x, MPFR_RNDZ));
+	}
+
+	fclose(fp);
 }

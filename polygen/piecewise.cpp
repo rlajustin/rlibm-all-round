@@ -123,12 +123,20 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 			return poly->coeffs[0];
 		}
 		else if (poly->termsize == 2){
-			return fma(x, poly->coeffs[1], poly->coeffs[0]);
+			//return fma(x, poly->coeffs[1], poly->coeffs[0]);
+			return poly->coeffs[1]*(x*x)+poly->coeffs[0]; //sinh, cosh
 		}
 		else if (poly->termsize == 3){
+		/*
 			double temp1 = fma(x, poly->coeffs[2], poly->coeffs[1]);
 			return fma(x, temp1, poly->coeffs[0]);      
-		
+		*/
+			double xsquare = x*x; // sinh, cosh
+			double y = poly->coeffs[2];
+			y *= xsquare;
+			y += poly->coeffs[1];
+			y *= xsquare;
+			y += poly->coeffs[0];
 		}
 		else if (poly->termsize == 4){
 /*			double xsquare = x * x;
@@ -188,14 +196,21 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 		if(poly->termsize == 1){
 			return x*poly->coeffs[0];
 		} else if(poly->termsize == 2){
-			double temp = x * x * poly->coeffs[1];
+			/*double temp = x * x * poly->coeffs[1];
 			return fma(x, poly->coeffs[0],temp);
-
+*/
+			return rlibm_horner_evaluation(x, poly);
 			//      return x*poly->coeffs[0] + x*x*poly->coeffs[1];
 		} else if(poly->termsize == 3){
-			double temp = x * x * fma(x, poly->coeffs[2], poly->coeffs[1]);
+		/*	double temp = x * x * fma(x, poly->coeffs[2], poly->coeffs[1]);
 			return fma(x, poly->coeffs[0], temp);
-
+		*/
+			double xsquare = x * x;
+			double y = poly->coeffs[2];
+			y *= xsquare;
+			y += poly->coeffs[1];
+			y *= xsquare;
+			y += poly->coeffs[0];
 			//     return x*poly->coeffs[0] + x*x*(poly->coeffs[1] + x*poly->coeffs[2]);
 		} else if(poly->termsize == 4){
 
@@ -559,14 +574,16 @@ int main(int argc, char** argv){
 	printf("EXIT_ON_THRESHOLD is %d\n", RLIBM_EXIT_ON_THRESHOLD);
 
 
-	int MY_RLIBM_PIECES = 4;
+	int MY_RLIBM_PIECES = 1;
 	//double ratios[] = {0.50, 0.15, 0.35}; // log
 	//double ratios[] = {0.325, 0.25, 0.125, 0.3}; // log10
 	//double ratios[] = {1.0}; // log1p up
 	//double ratios[] = {1.0}; // log1p down
-	double ratios[] = {0.2, 0.3, 0.3, 0.2}; // exp10f, expf
-	int powers[] = {0, 1, 2, 3, 4};
-	int powers_size = 5;
+	//double ratios[] = {0.2, 0.3, 0.3, 0.2}; // exp10f, expf
+	double ratios[] = {1.0}; // sinh, cosh
+	//int powers[] = {0, 2, 4}; // cosh stuff
+	int powers[] = {1, 3, 5}; // sinh stuff
+	int powers_size = 3;
 
 	size_t nentries_total = 0;
 	interval_data* intervals_full = rlibm_read_interval_file(argv[1], &nentries_total);

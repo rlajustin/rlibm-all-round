@@ -7,7 +7,7 @@ oracle:
 	g++ -I../../include oracle.cpp -o oracle -lmpfr -lgmp
 
 interval:
-	g++ -I../../include interval.cpp -o interval -lmpfr -lgmp
+	g++ -I../../include interval.cpp -o interval -lmpfr -lgmp -ffp-contract=off
 
-coshtest:
-	gcc -std=c11 -frounding-math -O3 coshtest.c -lm -o coshtest -I../../src -I../../include
+exptest:
+	gcc -std=c11 -O2 -frounding-math exptest.c -lm -o exptest -I../../src -I../../include

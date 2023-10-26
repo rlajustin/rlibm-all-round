@@ -23,143 +23,196 @@ bool ComputeSpecialCase(float x, float& res)
 {
 	Float fx;
 	fx.f = x;
-	if((fx.x & 0x7FFFFFFF) == 0) return true; // +-0, return 1.0
 
-	if(fx.x <= 0x335E5BD7) // x small
-	{
-		if(fx.x <= 0x32DE5BD8) return true; // return 0x1.0000008p+0
-		return true; // return 0x1.0000018p+0
-	}
+	fx.x &= 0x7FFFFFFF;
 
-	if(fx.x >= 0x421A209B && fx.x <= 0xB2DE5BD9)
-	{
-		if(fx.x < 0x80000000) {
-			if(fx.x <= 0x7f800000) return true; // return 0x1.ffffff8p+127 (inf - 1)
-			if(fx.x == 0x7f800000) return true; //return 1.0/0.0
-			return true; //return 0.0/0.0
-		}
-
-		if(fx.x <= 0xB25E5BD8) return true; //return 0x1.ffffff8p-1
-		return true; // return 0x1.fffffe8p-1
-	}
-
-	if(fx.x >= 0xC2349E36)
-	{
-		if(fx.x == 0xff800000) return true; //return 0.0
-		else return true; //return 0x1p-151
-		//handle NaN case
-	}
-
-	switch(fx.x) {
-		case 0x00000000: return true; // 1.0
-		case 0x80000000: return true; // 1.0
-		case 0x3f800000: return true; // 10.0
-		case 0x40000000: return true; // 100.0
-		case 0x40400000: return true; // 1000.0
-		case 0x40800000: return true; // 10000.0
-		case 0x40a00000: return true; // 100000.0
-		case 0x40c00000: return true; // 1000000.0
-		case 0x40e00000: return true; // 10000000.0
-		case 0x41000000: return true; // 100000000.0
-		case 0x41100000: return true; // 1000000000.0
-		case 0x41200000: return true; // 10000000000.0
-	}
+	if(fx.x <= 0x39FFFFFF) return true;
+	if(fx.x >= 0x42B2D4FD) return true;
 
 	return false;
 }
 
 double RangeReduction(float x) {
-	double xp = x * LG10X64;
+	double xp = x * CONST64BYLN2;
 	int N = (int)xp;
-	int N2 = N % 64;
-	if(N2<0) N2 += 64;
-	int N1 = N-N2;
-
-	int M = N1/64;
-	int J = N2;
-
-	double R = x - N*ONEBY64LG10;
-	return R;
+	return x - N * LN2BY64;
 }
 
-double OutputCompensation(float x, double yp) {
-	double xp = x * LG10X64;
+double OutputCompensation(float x, double sinhp, double coshp) {
+	double xp = x * CONST64BYLN2;
 	int N = (int)xp;
 	int N2 = N % 64;
-	if(N2<0) N2 += 64;
+	if(N2 < 0) N2 += 64;
 	int N1 = N-N2;
+	int I = N1/64;
+	double sinhHM = sinhH[I] * coshM[N2] + coshH[I] * sinhM[N2];
+	double coshHM = sinhH[I] * sinhM[N2] + coshH[I] * coshH[N2];
 
-	int M = N1/64;
-	int J = N2;
-
-	double R = x - N*ONEBY64LG10;
-	Double dY = {exp2JBy64[J]};
-	dY.x += ((uint64_t)M<<52);
-	yp *= dY.d;
-	return yp;
+	return sinhHM * sinhp + coshHM * coshp;
 }
 
-void GuessInitialLbUb(float x, double roundingLb, double roundingUb,
-		double xp, double& lb, double& ub) {
-	Double tempYp;
-	tempYp.d = exp10(xp);
-	double tempY = OutputCompensation(x, tempYp.d);
+bool GuessInitialLbUb(float x, double totalLB, double totalUB,
+			double R,
+			double& sinhLB, double& sinhUB,
+			double& coshLB, double& coshUB) {
+	Double dx, dx1, dx2;
 
-	//printf("%.10e, %.20e, %.20e\n", xp, tempY, exp(x));
-	//printf("%.20e\n%.20e\n%.20e\n", roundingLb, tempY, roundingUb);
+	double xp = x * CONST64BYLN2;
+	int N = (int)xp;
+	int N2 = N % 64;
+	if(N < 0) N2 += 64;
+	int N1 = N - N2;
+	int I = N1 / 64;
+	double sinhHM = sinhH[I] * coshM[N2] + coshH[I] * sinhM[N2];
+	double coshHM = sinhH[I] * sinhM[N2] + coshH[I] * coshM[N2];
 
-	if (tempY < roundingLb) {
-		do {
-			if (tempYp.d >= 0.0) tempYp.x++;
-			else tempYp.x--;
+	double A = cosh(R);
+	double B = sinh(R);
 
-			tempY = OutputCompensation(x, tempYp.d);
-		} while (tempY < roundingLb);
+	double M1 = totalLB / (sinhHM * B + coshHM * A);
+	coshLB = A * M1;
+	sinhLB = B * M1;
 
-		if (tempY > roundingUb) {
-			printf("Error during GuessInitialLbUb: lb > ub.\n");
-			printf("x = %.100e\n", x);
-			exit(0);
-		}
-		lb = tempYp.d;
-		ub = tempYp.d;
-		return;
+	if(sinhHM == 0)
+	{
+		dx.x = 0xFFEFFFFFFFFFFFFF; // -infty+1
+		sinhLB = dx.d;
+	}
+	if(coshHM == 0)
+	{
+		dx.x = 0xFFEFFFFFFFFFFFFF;
+		coshLB = dx.d;
 	}
 
-	if (tempY > roundingUb) {
-		do {
-			if (tempYp.d >= 0.0) tempYp.x--;
-			else tempYp.x++;
+	unsigned long step = 0x1000000000000;
+	while(step > 0)
+	{
+		dx1.d = coshLB;
+		dx2.d = sinhLB;
 
-			tempY = OutputCompensation(x, tempYp.d);
-		} while (tempY > roundingUb);
-
-		if (tempY < roundingLb) {
-			printf("Error during GuessInitialLbUb: lb > ub.\n");
-			printf("x = %.100e\n", x);
-			exit(0);
+		if(coshHM != 0)
+		{
+			if(dx1.d >= 0) dx1.x -= step;
+			else dx1.x += step;
 		}
-		lb = tempYp.d;
-		ub = tempYp.d;
-		return;
+
+		if(sinhHM != 0)
+		{
+			if(dx2.d >= 0) dx2.x -= step;
+			else dx2.x += step;
+		}
+
+		double recon = sinhHM * dx2.d + coshHM * dx1.d;
+
+		if(recon >= totalLB)
+		{
+			coshLB = dx1.d;
+			sinhLB = dx2.d;
+		}
+		else if(step > 0)
+		{
+			step /= 2;
+		}
 	}
 
-	lb = tempYp.d;
-	ub = tempYp.d;
-	return;
+	double recon = sinhHM * sinhLB + coshHM * coshLB;
+
+	while(recon < totalLB)
+	{
+		if(coshHM != 0)
+		{
+			dx.d = coshLB;
+			if(dx.d >= 0) dx.x++;
+			else dx.x--;
+			coshLB = dx.d;
+		}
+		if(sinhHM != 0)
+		{
+			dx.d = sinhLB;
+			if(dx.d >= 0) dx.x++;
+			else dx.x--;
+			sinhLB = dx.d;
+		}
+		recon = sinhHM * sinhLB + coshHM * coshLB;
+	}
+
+	double M2 = totalUB / (sinhHM * B + coshHM * A);
+	coshUB = A * M2;
+	sinhUB = B * M2;
+
+	// If SHM == 0, then cosh(R) can be any value.
+	if (coshHM == 0) {
+		dx.x = 0x7FEFFFFFFFFFFFFF;
+		coshUB = dx.d;
+	}
+
+	// If CHM == 0, then sinh(R) can be any value.
+	if (sinhHM == 0) {
+		dx.x = 0x7FEFFFFFFFFFFFFF;
+		sinhUB = dx.d;
+	}
+
+
+	step = 0x1000000000000;
+	while (step > 0) {
+		dx1.d = coshUB;
+		dx2.d = sinhUB;
+
+		if (coshHM != 0) {
+			if (dx1.d >= 0) dx1.x += step;
+			else dx1.x -= step;
+		}
+
+		if (sinhHM != 0) {
+			if (dx2.d >= 0) dx2.x += step;
+			else dx2.x -= step;
+		}
+
+		double recon = sinhHM * dx2.d + coshHM * dx1.d;
+
+		if (recon <= totalUB) {
+			coshUB = dx1.d;
+			sinhUB = dx2.d;
+		} else if (step > 0) {
+			step /= 2;
+		}
+	}
+
+	recon = sinhHM * sinhUB + coshHM * coshUB;
+
+	while (recon > totalUB) {
+		if (coshHM != 0) {
+			dx.d = coshUB;
+			if (dx.d >= 0) dx.x--;
+			else dx.x++;
+			coshUB = dx.d;
+		}
+		if (sinhHM != 0) {
+			dx.d = sinhUB;
+			if (dx.d >= 0) dx.x--;
+			else dx.x++;
+			sinhUB = dx.d;
+		}
+		recon = sinhHM * sinhUB + coshHM * coshUB;
+	}
+	return true;
 }
 
 void CalcRedIntErrorMsg1(float input, double roundingLb, double roundingUb,
-		double guessLb, double guessUb, double tempResult) {
-	printf("Initial guess resulted in a value outside of rounding interval\n");
+		double guessLbP1, double guessUbP1,
+		double guessLbP2, double guessUbP2,
+		double tempResult) {
+	printf("Initial guess for reduced interval results in a value outside of rounding interval\n");
 	printf("Diagnostics:");
 	printf("Input x = %.100e\n", input);
 	printf("Rounding interval:\n");
 	printf("lb      = %.100e\n", roundingLb);
 	printf("ub      = %.100e\n", roundingUb);
 	printf("Initial guess:\n");
-	printf("lb      = %.100e\n", guessLb);
-	printf("ub      = %.100e\n", guessUb);
+	printf("lb (P1) = %.100e\n", guessLbP1);
+	printf("ub (P1) = %.100e\n", guessUbP1);
+	printf("lb (P2) = %.100e\n", guessLbP2);
+	printf("ub (P2) = %.100e\n", guessUbP2);
 	printf("output  = %.100e\n", tempResult);
 	exit(0);
 }
@@ -205,10 +258,9 @@ void CalculateInterval(double x, double& lb, double& ub) {
 	}
 }
 
-void ComputeReducedInterval(float input, FILE* file, double corrResult) {
+void ComputeReducedInterval(float input, double corrResult, FILE* file1, FILE* file2) {
 	// For each input, determine if it's special case or not. If it is, then
 	// we continue to the next input
-	Float fl = {input};
 	//printf("%x: ", fl.x);
 	float specialCaseResult;
 	if (ComputeSpecialCase(input, specialCaseResult)) return;
@@ -217,112 +269,154 @@ void ComputeReducedInterval(float input, FILE* file, double corrResult) {
 	double roundingLb, roundingUb;
 	CalculateInterval(corrResult, roundingLb, roundingUb);
 
+	if (roundingLb > corrResult || roundingUb < corrResult) {
+		printf("Rounding interval seems to be computed wrongly.\n");
+		printf("x            = %.100e\n", input);
+		printf("oracleResult = %.100e\n", corrResult);
+		printf("roundingLb   = %.100e\n", roundingLb);
+		printf("roundingUb   = %.100e\n\n", roundingUb);
+		exit(0);
+	}
+
 	// Compute reduced input
 	double reducedInput = RangeReduction(input);
 	//printf("input: %.10e,reduced input: %.10e\noracle: %.10e,result: %.10e\n",input,reducedInput,corrResult, OutputCompensation(input, log1p(reducedInput)*ONEBYLN2));
-	// Get the initial guess for Lb and Ub
-	double guessLb, guessUb;
-	GuessInitialLbUb(input, roundingLb, roundingUb, reducedInput, guessLb, guessUb);
-	//printf("oracle: %.10e, guesses: %.10e, %.10e\n", corrResult, guessLb, guessUb);
 
-	// 6. In a while loop, keep increasing lb and ub using binary search
-	//    method to find largest reduced interval
-	double redIntLb, redIntUb, tempResult;
-	bool lbIsSpecCase = false, ubIsSpecCase = false;
+	double guessLbP1, guessUbP1, guessLbP2, guessUbP2;
 
+	bool useThis = GuessInitialLbUb(input,
+					roundingLb, roundingUb,
+					reducedInput,
+					guessLbP1, guessUbP1,
+					guessLbP2, guessUbP2);
+
+	if (useThis) {
+		// Since thiss is from user, let's do sanity check                                           
+		if (guessLbP1 > guessUbP1) {
+			printf("P1 interval is empty for :\n");
+			printf("input = %.100e\n", input);
+			printf("P1 Lb = %.100e\n", guessLbP1);
+			printf("P1 Ub = %.100e\n", guessUbP1);
+			printf("Aborting...\n");
+			exit(0);
+		}
+
+		if (guessLbP2 > guessUbP2) {
+			printf("P2 interval is empty for :\n");
+			printf("input = %.100e\n", input);
+			printf("P2 Lb = %.100e\n", guessLbP2);
+			printf("P2 Ub = %.100e\n", guessUbP2);
+			printf("Aborting...\n");
+			exit(0);
+		}
+		// Save reduced input, lb, and ub to files.                                                  
+		fwrite(&reducedInput, sizeof(double), 1, file1);
+		fwrite(&guessLbP1, sizeof(double), 1, file1);
+		fwrite(&guessUbP1, sizeof(double), 1, file1);
+		fwrite(&reducedInput, sizeof(double), 1, file2);
+		fwrite(&guessLbP2, sizeof(double), 1, file2);
+		fwrite(&guessUbP2, sizeof(double), 1, file2);
+		return;
+	}
+
+	double redIntLbP1, redIntUbP1, redIntLbP2, redIntUbP2, tempResult;
 
 	// Check if we can lower the lower bound more
-	tempResult = OutputCompensation(input, guessLb);
-	//    printf("guess: %.10e\n", tempResult);
-
-	// If the initial guess puts us outside of rounding interval, there is
-	// nothing more we can do
+	tempResult = OutputCompensation(input, guessLbP1, guessLbP2);
+	// If the initial guess puts us outside of rounding interval, there
+	// is nothing more we can do
 	if (tempResult < roundingLb || tempResult > roundingUb) {
 		CalcRedIntErrorMsg1(input, roundingLb, roundingUb,
-				guessLb, guessUb, tempResult);
+				guessLbP1, guessUbP1,
+				guessLbP2, guessUbP2, tempResult);
 	}
+
+
+
 	// Otherwise, we keep lowering lb and see if we are still inside the
 	// rounding interval
-	unsigned long long step = 0x1000000000000llu;
-	while(step > 0) {
-		Double dx;
-		dx.d = guessLb;
-		//printf("guess: %.10e\n", guessLb);
-		if (dx.d >= 0) {
-			if(dx.x < step) {
-				dx.x = 0x8000000000000000 + step - dx.x;
-			} else dx.x -= step;
-		}
-		else dx.x += step;
-		//	printf("yes\n");
-		tempResult = OutputCompensation(input, dx.d);
-		//printf("in %.10e, guess %.10e\n", input, dx.d);
-		//printf("step: %llu, lb: %.10e, ub: %.10e\nguess: %.10e, pre: %.10e\n", step,roundingLb,roundingUb,tempResult,dx.d); 
+	unsigned long long step = 0x1000000000000;
+	Double dx1, dx2;
+	while (step > 0) {
+		dx1.d = guessLbP1;
+		if (dx1.d >= 0) dx1.x -= step;
+		else dx1.x += step;
+
+		dx2.d = guessLbP2;
+		if (dx2.d >= 0) dx2.x -= step;
+		else dx2.x += step;
+
+		tempResult = OutputCompensation(input, dx1.d, dx2.d);
 		if (tempResult >= roundingLb && tempResult <= roundingUb) {
 			// It's safe to lower the lb
-			guessLb = dx.d;
+			guessLbP1 = dx1.d;
+			guessLbP2 = dx2.d;
 		} else {
 			// Otherwise decrease the step by half
 			step /= 2;
 		}
 	}
 
-	// Finally, set redIntLb
-	redIntLb = guessLb;
+	// Finally, set redIntLbP1 and redIntLbP2
+	redIntLbP1 = guessLbP1;
+	redIntLbP2 = guessLbP2;
 
-	// Check if we can increase the upper bound more
-	tempResult = OutputCompensation(input, guessUb);
-	// If the initial guess puts us outside of rounding interval, there is
-	// nothing more we can do
+	tempResult = OutputCompensation(input, guessUbP1, guessUbP2);
+	// If the initial guess puts us outside of rounding interval, there
+	// is nothing more we can do
 	if (tempResult < roundingLb || tempResult > roundingUb) {
 		CalcRedIntErrorMsg1(input, roundingLb, roundingUb,
-				guessLb, guessUb, tempResult);
+				guessLbP1, guessUbP1,
+				guessLbP2, guessUbP2, tempResult);
 	}
-	// Otherwise, we keep raising ub and see if we are still inside the
-	// rounding interval
-	step = 0x1000000000000llu;
-	while(step > 0) {
 
-		Double dx;
-		dx.d = guessUb;
-		if (dx.x < 0x8000000000000000) dx.x += step;
-		else
-		{
-			//if negative about to go positive by increasing
-			if(dx.x - step < 0x8000000000000000) {
-				dx.x = 0x8000000000000000 - dx.x + step;
-			} else dx.x -= step;
-		}
-		tempResult = OutputCompensation(input, dx.d);
-		//printf("step: %llx, lb: %.10e, ub: %.10e\nguess: %.10e, pre: %.20e\n", step,roundingLb,roundingUb,tempResult,dx.d); 
+	// Otherwisse, we keep increasing ub's and see if we are still
+	// inside the rounding interval
+	step = 0x1000000000000;
+
+	while (step > 0) {
+		dx1.d = guessUbP1;
+		if (dx1.d >= 0) dx1.x += step;
+		else dx1.x -= step;
+
+		dx2.d = guessUbP2;
+		if (dx2.d >= 0) dx2.x += step;
+		else dx2.x -= step;
+
+		tempResult = OutputCompensation(input, dx1.d, dx2.d);
 		if (tempResult >= roundingLb && tempResult <= roundingUb) {
 			// It's safe to lower the lb
-			guessUb = dx.d;
+			guessUbP1 = dx1.d;
+			guessUbP2 = dx2.d;
 		} else {
 			// Otherwise decrease the step by half
 			step /= 2;
 		}
 	}
 
-	// Finally, set redIntLb
-	redIntUb = guessUb;
+	// Finally, set redIntLbP1 and redIntLbP2
+	redIntUbP1 = guessUbP1;
+	redIntUbP2 = guessUbP2;
 
-	// Save reduced input, lb, and ub to files.
-	fwrite(&reducedInput, sizeof(double), 1, file);
-	fwrite(&redIntLb, sizeof(double), 1, file);
-	fwrite(&redIntUb, sizeof(double), 1, file);
+	fwrite(&reducedInput, sizeof(double), 1, file1);
+	fwrite(&redIntLbP1, sizeof(double), 1, file1);
+	fwrite(&redIntUbP1, sizeof(double), 1, file1);
+	fwrite(&reducedInput, sizeof(double), 1, file2);
+	fwrite(&redIntLbP2, sizeof(double), 1, file2);
+	fwrite(&redIntUbP2, sizeof(double), 1, file2);
 }
 
 int main(int argc, char** argv)
 {
-	if(argc!=3)
+	if(argc!=4)
 	{
-		printf("usage: %s <oracle file> <interval file>\n",argv[0]);
+		printf("usage: %s <oracle file> <intervals1> <intervals2>\n",argv[0]);
 		exit(0);
 	}
 
 	FILE* oraclefile = fopen(argv[1], "r");
-	FILE* fp = fopen(argv[2], "w");
+	FILE* file1 = fopen(argv[2], "w");
+	FILE* file2 = fopen(argv[3], "w");
 	fseek(oraclefile, LO*sizeof(double), SEEK_SET);
 	int original = fegetround();
 	fesetround(FE_TOWARDZERO);
@@ -332,11 +426,12 @@ int main(int argc, char** argv)
 		fread(&oracle, sizeof(double), 1, oraclefile);
 		Float f;
 		f.x = i;
-		ComputeReducedInterval(f.f,fp,oracle);
+		ComputeReducedInterval(f.f, oracle, file1, file2);
 		//if((i%0x1000000)==0) printf("%ld/%ld\n", i/0x1000000, 0x100000000/0x1000000);
 	}
 	fesetround(original);
-	fclose(fp);
+	fclose(file1);
+	fclose(file2);
 	fclose(oraclefile);
 
 	return 0;

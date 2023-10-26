@@ -1,0 +1,16 @@
+sinh:
+violated_input is 0x1.d2fd8bccdp-9, lb is 0x1.d2fdcb470f5ccp-9, ub is 0x1.d2fdcc8c8dd23p-9
+violated_input is 0x1.ff884078ecp-8, lb is 0x1.ff8993ae28dadp-8, ub is 0x1.ff8994df3e396p-8
+violated_input is 0x1.113e28d466p-7, lb is 0x1.113ef7cf95d0dp-7, ub is 0x1.113ef85b8c551p-7
+violated_input is 0x1.28e70f8382p-7, lb is 0x1.28e818c6b68a5p-7, ub is 0x1.28e819c0d2b02p-7
+violated_input is 0x1.322aa79dbdp-7, lb is 0x1.322bca80046ecp-7, ub is 0x1.322bcb9034ca4p-7
+Polynomial: y=0x1.fffffffffffffp-1 x^(1) + 0x1.5555555481c53p-3 x^(3) + 0x1.111812e6199c3p-7 x^(5)
+
+cosh:
+violated_input is 0x1.d2fd8bccdp-9, lb is 0x1.000069c999dc6p+0, ub is 0x1.00006a7c08e11p+0
+violated_input is 0x1.ff884078ecp-8, lb is 0x1.0001fe7897ce1p+0, ub is 0x1.0001ff1146fe2p+0
+violated_input is 0x1.113e28d466p-7, lb is 0x1.000246c8ff9fp+0, ub is 0x1.0002474c21daap+0
+violated_input is 0x1.28e70f8382p-7, lb is 0x1.0002afd7d4c13p+0, ub is 0x1.0002b0af7d9e8p+0
+violated_input is 0x1.322aa79dbdp-7, lb is 0x1.0002db71c422cp+0, ub is 0x1.0002dc555cc8dp+0
+Polynomial: y=0x1.0000000000001p+0 x^(0) + 0x1.ffffffff1a5c1p-2 x^(2) + 0x1.5557df50b52d8p-5 x^(4)
+
