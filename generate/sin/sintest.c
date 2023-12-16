@@ -1,12 +1,14 @@
-#ifndef LOG2TEST_C
-#define LOG2TEST_C
+#ifndef EXPTEST_C
+#define EXPTEST_C
 #include <stdio.h>
-#include "log2f.c"
+#include "sinf.c"
 #include <x86intrin.h>
 #include <stdlib.h>
 #include <fenv.h>
 #include <string.h>
 
+#define LO 0x0
+#define HI 0x100000000
 
 void RunTest(FILE* fp, FILE* oracle) {
 	unsigned long count = 0;
@@ -16,28 +18,29 @@ void RunTest(FILE* fp, FILE* oracle) {
 	unsigned int dummy;
 
 	float x, res, oracleval;
-	double oval;
+	double oval, rval;
 	union {float f; unsigned long x;} xbase;
 
-	for(count = 0x0; count < 0x100000000; count+=1)
+	for(count = LO; count < HI; count+=1)
 	{
 		xbase.x = count;
 		x = xbase.f;
 
 		do {
 			t1 = __rdtscp(&dummy);
-			res = rlibm34_log2f(x);
+			res = rlibm_sinf(x);
 			t2 = __rdtscp(&dummy);
 		} while(t2 <= t1);
 
 		fread(&oval, sizeof(double), 1, oracle);
-		oracleval=oval;
+		oracleval=(float)oval;
 		totalTime += (t2-t1);
 		if(res != oracleval && oracleval == oracleval)
 		{
-			printf("wrong rlibm: %.20e, oracle: %.20e\n", res, oval);
+			printf("wrong rlibm: %lx/%a, oracle: %a\n", count, res, oracleval);
 			someCount++;
-		}	
+		}
+		//if(someCount>5) exit(0);
 	}
 
 	fprintf(fp, "%lu, %lu\n", totalTime, someCount);
@@ -67,9 +70,11 @@ int main(int argc, char** argv)
 	{
 		fesetround(FE_TONEAREST);
 	}
+	fesetround(FE_TONEAREST);
 
 	FILE* oracle = fopen(argv[1], "r");
 	FILE* fp = fopen(argv[2], "w");
+	fseek(oracle, LO*sizeof(double), SEEK_SET);
 	RunTest(fp, oracle);
 
 	fclose(oracle);

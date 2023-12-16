@@ -43,7 +43,8 @@ int main()
 	printf("%a\n", mpfr_get_d(x, MPFR_RNDZ));
 	printf("%.20e\n", mpfr_get_d(x, MPFR_RNDZ));
  */
-	mpfr_t x;
+
+/*	mpfr_t x;
 	mpfr_init2(x, 200);
 	fprintf(fp, "sinh:\n");
 	for(int i=0;i<130;i++)
@@ -63,6 +64,30 @@ int main()
 		mpfr_log(x, x, MPFR_RNDZ);
 		mpfr_mul_d(x, x, d, MPFR_RNDZ);
 		mpfr_cosh(x, x, MPFR_RNDZ);
+		fprintf(fp, "%a,\n", mpfr_get_d(x, MPFR_RNDZ));
+	}
+*/
+
+/*
+	mpfr_t x;
+	mpfr_init2(x, 200);
+	mpfr_const_pi(x, MPFR_RNDZ);
+	printf("pi: %a\n", mpfr_get_d(x, MPFR_RNDZ));
+	mpfr_d_div(x, 1.0, x, MPFR_RNDZ);
+	printf("1/pi: %a\n", mpfr_get_d(x, MPFR_RNDZ));
+	mpfr_const_pi(x, MPFR_RNDZ);
+	mpfr_div_d(x, x, 256.0, MPFR_RNDZ);
+	printf("pi/256: %a\n", mpfr_get_d(x, MPFR_RNDZ));
+*/
+
+	mpfr_t x;
+	mpfr_init2(x, 300);
+	for(int i=0;i<512;i++)
+	{
+		mpfr_const_pi(x, MPFR_RNDZ);
+		mpfr_mul_d(x, x, (double)i, MPFR_RNDZ);
+		mpfr_div_d(x, x, 256.0, MPFR_RNDZ);
+		mpfr_sin(x, x, MPFR_RNDZ);
 		fprintf(fp, "%a,\n", mpfr_get_d(x, MPFR_RNDZ));
 	}
 

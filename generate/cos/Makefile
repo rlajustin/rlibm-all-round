@@ -9,5 +9,5 @@ oracle:
 interval:
 	g++ -I../../include interval.cpp -o interval -lmpfr -lgmp
 
-logtest:
-	gcc -std=c11 -frounding-math -O3 logtest.c -lm -o logtest -I../../src -I../../include
+costest:
+	gcc -std=c11 -frounding-math -O3 costest.c -lm -o costest -I../../src -I../../include

@@ -1,0 +1,6 @@
+Polynomial: y=0x1.921fb54442d8dp-7 x^(1) + -0x1.4abbcea4e90a7p-22 x^(3) + 0x1.4875c3008ecf5p-39 x^(5)
+
+Polynomial: y=0x1p+0 x^(0) + -0x1.3bd3cc9e4459fp-14 x^(2) + 0x1.03cc6d15e7e01p-30 x^(4)
+
+small:
+Polynomial: y=0x1.0000000000002p+0 x^(0) + -0x1.00000000752fdp-1 x^(2) + 0x1.5557b658a7321p-5 x^(4)

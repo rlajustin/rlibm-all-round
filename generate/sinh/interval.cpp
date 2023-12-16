@@ -70,6 +70,8 @@ bool GuessInitialLbUb(float x, double totalLB, double totalUB,
 	double B = sinh(R);
 
 	double M1 = totalLB / (sinhHM * A + coshHM * B);
+	double M2 = totalUB / (sinhHM * A + coshHM * B);
+
 	coshLB = A * M1;
 	sinhLB = B * M1;
 
@@ -136,7 +138,6 @@ bool GuessInitialLbUb(float x, double totalLB, double totalUB,
 		recon = sinhHM * coshLB + coshHM * sinhLB;
 	}
 
-	double M2 = totalUB / (sinhHM * A + coshHM * B);
 	coshUB = A * M2;
 	sinhUB = B * M2;
 

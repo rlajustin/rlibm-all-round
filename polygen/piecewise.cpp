@@ -113,7 +113,26 @@ double rlibm_horner_evaluation(double x, polynomial* poly){
 
 
 double rlibm_poly_evaluation(double x, polynomial* poly){
-	return rlibm_horner_evaluation(x, poly);
+	//return rlibm_horner_evaluation(x, poly);
+
+	if(poly->power[0] == 0) //powers 0,2,4
+	{
+		double x2 = x*x;
+		double tmp = x2 * poly->coeffs[2];
+		tmp += poly->coeffs[1];
+		tmp *= x2;
+		return tmp + poly->coeffs[0];
+	}
+
+	if(poly->power[0] == 1) //powers 1, 3, 5
+	{
+		double x2 = x*x;
+		double tmp = x2 * poly->coeffs[2];
+		tmp += poly->coeffs[1];
+		tmp *= x2;
+		tmp += poly->coeffs[0];
+		return tmp * x;
+	}
 
 	if(poly->power[0] == 0){
 
@@ -581,8 +600,8 @@ int main(int argc, char** argv){
 	//double ratios[] = {1.0}; // log1p down
 	//double ratios[] = {0.2, 0.3, 0.3, 0.2}; // exp10f, expf
 	double ratios[] = {1.0}; // sinh, cosh
-	//int powers[] = {0, 2, 4}; // cosh stuff
-	int powers[] = {1, 3, 5}; // sinh stuff
+	int powers[] = {0, 2, 4}; // cos stuff
+	//int powers[] = {1, 3, 5}; // sin stuff
 	int powers_size = 3;
 
 	size_t nentries_total = 0;
