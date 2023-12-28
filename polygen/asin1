@@ -1,0 +1,114 @@
+EXIT_ON_THRESHOLD is 0
+number of intervals = 92274688
+piece = 0
+start_index = 0
+end_index = 92274688
+nentries=92274688
+Trying to generate a polynomial  with 1 terms 
+Trying to generate a polynomial  with 2 terms 
+Trying to generate a polynomial  with 3 terms 
+Trying to generate a polynomial  with 4 terms 
+Trying to generate a polynomial  with 5 terms 
+Trying to generate a polynomial  with 6 terms 
+Trying to generate a polynomial  with 7 terms 
+number of violated intervals: 566605, total iterations=1 
+Trying to generate a polynomial  with 7 terms 
+number of violated intervals: 313801, total iterations=2 
+Trying to generate a polynomial  with 7 terms 
+number of violated intervals: 268740, total iterations=3 
+Trying to generate a polynomial  with 7 terms 
+number of violated intervals: 132621, total iterations=4 
+Trying to generate a polynomial  with 7 terms 
+Trying to generate a polynomial  with 8 terms 
+number of violated intervals: 223582, total iterations=5 
+Trying to generate a polynomial  with 8 terms 
+number of violated intervals: 178290, total iterations=6 
+Trying to generate a polynomial  with 8 terms 
+number of violated intervals: 58746, total iterations=7 
+Trying to generate a polynomial  with 8 terms 
+number of violated intervals: 28164, total iterations=8 
+Trying to generate a polynomial  with 8 terms 
+number of violated intervals: 17801, total iterations=9 
+Trying to generate a polynomial  with 8 terms 
+number of violated intervals: 16701, total iterations=10 
+Trying to generate a polynomial  with 8 terms 
+number of violated intervals: 14225, total iterations=11 
+Trying to generate a polynomial  with 8 terms 
+number of violated intervals: 10873, total iterations=12 
+Trying to generate a polynomial  with 8 terms 
+number of violated intervals: 9533, total iterations=13 
+Trying to generate a polynomial  with 8 terms 
+number of violated intervals: 7764, total iterations=14 
+Trying to generate a polynomial  with 8 terms 
+Trying to generate a polynomial  with 9 terms 
+number of violated intervals: 17773, total iterations=15 
+Trying to generate a polynomial  with 9 terms 
+number of violated intervals: 9928, total iterations=16 
+Trying to generate a polynomial  with 9 terms 
+number of violated intervals: 5273, total iterations=17 
+Trying to generate a polynomial  with 9 terms 
+number of violated intervals: 1873, total iterations=18 
+Trying to generate a polynomial  with 9 terms 
+number of violated intervals: 1147, total iterations=19 
+Trying to generate a polynomial  with 9 terms 
+number of violated intervals: 718, total iterations=20 
+Trying to generate a polynomial  with 9 terms 
+number of violated intervals: 699, total iterations=21 
+Trying to generate a polynomial  with 9 terms 
+number of violated intervals: 599, total iterations=22 
+Trying to generate a polynomial  with 9 terms 
+number of violated intervals: 550, total iterations=23 
+Trying to generate a polynomial  with 9 terms 
+number of violated intervals: 451, total iterations=24 
+Trying to generate a polynomial  with 9 terms 
+number of violated intervals: 321, total iterations=25 
+Trying to generate a polynomial  with 9 terms 
+Trying to generate a polynomial  with 10 terms 
+number of violated intervals: 109, total iterations=26 
+Trying to generate a polynomial  with 10 terms 
+number of violated intervals: 71, total iterations=27 
+Trying to generate a polynomial  with 10 terms 
+number of violated intervals: 48, total iterations=28 
+Trying to generate a polynomial  with 10 terms 
+number of violated intervals: 36, total iterations=29 
+Trying to generate a polynomial  with 10 terms 
+number of violated intervals: 21, total iterations=30 
+Trying to generate a polynomial  with 10 terms 
+number of violated intervals: 25, total iterations=31 
+Trying to generate a polynomial  with 10 terms 
+number of violated intervals: 23, total iterations=32 
+Trying to generate a polynomial  with 10 terms 
+number of violated intervals: 23, total iterations=33 
+Trying to generate a polynomial  with 10 terms 
+Trying to generate a polynomial  with 11 terms 
+number of violated intervals: 21, total iterations=34 
+Trying to generate a polynomial  with 11 terms 
+number of violated intervals: 6, total iterations=35 
+Trying to generate a polynomial  with 11 terms 
+number of violated intervals: 5, total iterations=36 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x1p-12
+violated_input is 0x1.cbf43cp-4, lb is 0x1.cced1c0000001p-4, ub is 0x1.cced1cfffffffp-4
+violated_input is 0x1.62c7cap-2, lb is 0x1.6a4aa30000001p-2, ub is 0x1.6a4aa3fffffffp-2
+violated_input is 0x1.7136c8p-2, lb is 0x1.79b8bc0000001p-2, ub is 0x1.79b8bcfffffffp-2
+violated_input is 0x1.cc9326p-2, lb is 0x1.ddb72d0000001p-2, ub is 0x1.ddb72dfffffffp-2
+violated_input is 0x1.f46be6p-2, lb is 0x1.056c2b0000001p-1, ub is 0x1.056c2bfffffffp-1
+Polynomial: y=0x1.0000000000001p+0 x^(1) + 0x1.555555554a6b4p-3 x^(3) + 0x1.3333335176244p-4 x^(5) + 0x1.6db6c3c61f73fp-5 x^(7) + 0x1.f1ceac070f183p-6 x^(9) + 0x1.6decc3bad0cd6p-6 x^(11) + 0x1.23c3cf0d8e0aep-6 x^(13) + 0x1.5e57cdf75f1dfp-7 x^(15) + 0x1.a3e2573bca22dp-6 x^(17) + -0x1.8fbcf12bb8e1bp-6 x^(19) + 0x1.82e1c751be5a9p-5 x^(21)
+Trying to generate a polynomial  with 11 terms 
+number of violated intervals: 1, total iterations=37 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x1p-12
+violated_input is 0x1.3e98d6p-2, lb is 0x1.43f9900000001p-2, ub is 0x1.43f990fffffffp-2
+Polynomial: y=0x1.0000000000001p+0 x^(1) + 0x1.555555554b3p-3 x^(3) + 0x1.3333334b7994bp-4 x^(5) + 0x1.6db6c910cd2d7p-5 x^(7) + 0x1.f1ccc90569ea4p-6 x^(9) + 0x1.6e1833e367477p-6 x^(11) + 0x1.219aaf3c7fdccp-6 x^(13) + 0x1.7e1f032e25dc8p-7 x^(15) + 0x1.60b53730897f2p-6 x^(17) + -0x1.f0485bc28d972p-7 x^(19) + 0x1.3c261c346e0d2p-5 x^(21)
+Trying to generate a polynomial  with 11 terms 
+number of violated intervals: 1, total iterations=38 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x1p-12
+violated_input is 0x1.3e98d6p-2, lb is 0x1.43f9900000001p-2, ub is 0x1.43f990fffffffp-2
+Polynomial: y=0x1.0000000000001p+0 x^(1) + 0x1.555555554b3p-3 x^(3) + 0x1.3333334b7994bp-4 x^(5) + 0x1.6db6c910cd2d7p-5 x^(7) + 0x1.f1ccc90569ea4p-6 x^(9) + 0x1.6e1833e367477p-6 x^(11) + 0x1.219aaf3c7fdccp-6 x^(13) + 0x1.7e1f032e25dc8p-7 x^(15) + 0x1.60b53730897f2p-6 x^(17) + -0x1.f0485bc28d972p-7 x^(19) + 0x1.3c261c346e0d2p-5 x^(21)
+Trying to generate a polynomial  with 11 terms 
+number of violated intervals: 0, total iterations=39 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x1p-12
+Polynomial: y=0x1.0000000000001p+0 x^(1) + 0x1.555555554b379p-3 x^(3) + 0x1.3333334b3c3c9p-4 x^(5) + 0x1.6db6c9558f6d3p-5 x^(7) + 0x1.f1ccad52abd94p-6 x^(9) + 0x1.6e1aaa7f27153p-6 x^(11) + 0x1.217cedc4e46b8p-6 x^(13) + 0x1.7fbb1ae8a5081p-7 x^(15) + 0x1.5d7dfbee4ea86p-6 x^(17) + -0x1.e279b404d707p-7 x^(19) + 0x1.3910309f199a2p-5 x^(21)
+Polynomial: y=0x1.0000000000001p+0 x^(1) + 0x1.555555554b379p-3 x^(3) + 0x1.3333334b3c3c9p-4 x^(5) + 0x1.6db6c9558f6d3p-5 x^(7) + 0x1.f1ccad52abd94p-6 x^(9) + 0x1.6e1aaa7f27153p-6 x^(11) + 0x1.217cedc4e46b8p-6 x^(13) + 0x1.7fbb1ae8a5081p-7 x^(15) + 0x1.5d7dfbee4ea86p-6 x^(17) + -0x1.e279b404d707p-7 x^(19) + 0x1.3910309f199a2p-5 x^(21)
