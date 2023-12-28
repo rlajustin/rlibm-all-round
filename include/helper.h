@@ -1,6 +1,7 @@
 #pragma once
 #include <mpfr.h>
 #include "math.h"
+#include "int_floats.h"
 
 // MAXVAL = 0111 1111 0111 1111 1111 1111 1111 1111 11
 #define MAXVAL 3.40282361850336062550457001444955389952e+38
@@ -8,16 +9,6 @@
 #define MAXm1VAL 3.40282356779733661637539395458142568448e+38
 #define OVER34VAL 3.40282366920938463463374607431768211456e+38
 #define MINVAL 3.503246160812042677309323958224790328200654854691289429392670709724477706714651503716595470905303955078125e-46
-
-typedef union {
-	float f;
-	unsigned x;
-} Float;
-
-typedef union {
-	double d;
-	unsigned long long int x;
-} Double;
 
 double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
 	int cmp, status;

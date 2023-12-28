@@ -1,28 +1,11 @@
 # rlibm-all-round
 
-This repo contains functions for logf, log2f, log10f, and log1pf that are correctly rounded for all rounding modes.
+[The RLIBM Project](https://github.com/rutgers-apl/The-RLIBM-Project) contains functions that produce correctly-rounded results for all rounding modes with just a single implementation. However, this implementation must be executed in the mode in which it was generated, and the machine rounding mode needs to be changed twice per function call. The solution is to generate the implementation using the round-to-zero (FE_TOWARDZERO) rounding mode. Then, we can use error-free transformations to approximate the rounding error of every floating-point operation in the implementation, and simulate round-to-zero regardless of the machine's actual rounding mode.
 
 ## Generation
 
-To run the oracle generator use
-```
-make oracle
-./oracle <oracle file>
-```
-To run the interval generator use
-```
-make interval
-./interval <oracle file> <interval file>
-```
-To run polynomial generator use
-```
-make piecewise
-./piecewise <interval file>
-```
+The generation process is nearly identical to the standard RLIBM approach. There are some differing constants, which are now generated with RNDZ rather than RNDN (done for consistency, but likely doesn't matter in the end). Range reduction, output compensation, and polynomial generation are all also computed with RNDZ, so it matches the generated implementation when it simulates RNDZ. 
 
-### Changes from standard RLIBM implementation
-To generate the polynomial, we change very little from the RLIBM-ALL approach, except that we run interval and polynomial generation in the round-to-zero mode.
+## Testing
 
-The library implementation of these functions simulates floating-point operations in the round-to-zero rounding mode, regardless of the machine's rounding mode. This is achieved by looking at the sign of the approximate error of every floating point operation, and decrementing the double value toward zero if necessary.
-
-Values for constants were generated in round-to-zero using the MPFR oracle.
+The finished implmentations are all found in `src`

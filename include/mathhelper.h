@@ -4,11 +4,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <math.h>
-
-typedef union {
-	double d;
-	unsigned long long x;
-} Double;
+#include "int_floats.h"
 
 /*
    A double value rnd(x) for any rounding mode for any real number x must be adjusted to obtain rndz(x) when rnd(x) != rndz(x). 

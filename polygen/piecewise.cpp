@@ -113,27 +113,19 @@ double rlibm_horner_evaluation(double x, polynomial* poly){
 
 
 double rlibm_poly_evaluation(double x, polynomial* poly){
-	//return rlibm_horner_evaluation(x, poly);
-
-	if(poly->power[0] == 0) //powers 0,2,4
+	if(poly->termsize == 11)
 	{
 		double x2 = x*x;
-		double tmp = x2 * poly->coeffs[2];
-		tmp += poly->coeffs[1];
-		tmp *= x2;
-		return tmp + poly->coeffs[0];
+		double y = poly->coeffs[10];
+		for(int i=9;i>=0;i--)
+		{
+			y *= x2;
+			y += poly->coeffs[i];
+		}
+		return  y*x;
 	}
 
-	if(poly->power[0] == 1) //powers 1, 3, 5
-	{
-		double x2 = x*x;
-		double tmp = x2 * poly->coeffs[2];
-		tmp += poly->coeffs[1];
-		tmp *= x2;
-		tmp += poly->coeffs[0];
-		return tmp * x;
-	}
-
+	return rlibm_horner_evaluation(x, poly);
 	if(poly->power[0] == 0){
 
 		//for exp with powers starting from 0
@@ -142,8 +134,8 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 			return poly->coeffs[0];
 		}
 		else if (poly->termsize == 2){
-			//return fma(x, poly->coeffs[1], poly->coeffs[0]);
-			return poly->coeffs[1]*(x*x)+poly->coeffs[0]; //sinh, cosh
+			return fma(x, poly->coeffs[1], poly->coeffs[0]);
+			//return poly->coeffs[1]*(x*x)+poly->coeffs[0]; //sinh, cosh
 		}
 		else if (poly->termsize == 3){
 		/*
@@ -600,9 +592,10 @@ int main(int argc, char** argv){
 	//double ratios[] = {1.0}; // log1p down
 	//double ratios[] = {0.2, 0.3, 0.3, 0.2}; // exp10f, expf
 	double ratios[] = {1.0}; // sinh, cosh
-	int powers[] = {0, 2, 4}; // cos stuff
+	//int powers[] = {0, 2, 4}; // cos stuff
 	//int powers[] = {1, 3, 5}; // sin stuff
-	int powers_size = 3;
+	int powers[] = {1,3,5,7,9,11,13,15,17,19,21};
+	int powers_size = 11;
 
 	size_t nentries_total = 0;
 	interval_data* intervals_full = rlibm_read_interval_file(argv[1], &nentries_total);
