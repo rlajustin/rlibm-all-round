@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 	}
 
 	FILE* fp = fopen(argv[1], "w");
-	mpfr_init2(x, 200);
+	mpfr_init2(x, 400);
 	double result;
 	for(unsigned long i=LO;i<HI;i++)
 	{

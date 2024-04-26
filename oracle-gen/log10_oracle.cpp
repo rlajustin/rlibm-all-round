@@ -1,4 +1,4 @@
-#include "../helper.h"
+#include "helper.h"
 
 #define LO 0x0
 #define HI 0x100000000

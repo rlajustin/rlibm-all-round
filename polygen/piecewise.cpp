@@ -113,19 +113,21 @@ double rlibm_horner_evaluation(double x, polynomial* poly){
 
 
 double rlibm_poly_evaluation(double x, polynomial* poly){
-	if(poly->termsize == 11)
+	if(poly->termsize == 2) return rlibm_horner_evaluation(x, poly);
+	if(poly->power[0] == 0 and poly->power[1] == 2 and poly->power[2] == 4 and poly->termsize == 3)
 	{
-		double x2 = x*x;
-		double y = poly->coeffs[10];
-		for(int i=9;i>=0;i--)
-		{
-			y *= x2;
-			y += poly->coeffs[i];
-		}
-		return  y*x;
+		double xsquare = x*x;
+		double temp1 = fma(xsquare, poly->coeffs[2], poly->coeffs[1]);
+		return fma(xsquare, temp1, poly->coeffs[0]);
+	}
+	if(poly->power[0] == 1 and poly->power[1] == 3 and poly->power[2] == 5 and poly->termsize == 3)
+	{
+		double xsquare = x*x;
+		double temp1 = fma(xsquare, poly->coeffs[2], poly->coeffs[1]);
+		double temp2 = fma(xsquare, temp1, poly->coeffs[0]);
+		return x*temp2;
 	}
 
-	return rlibm_horner_evaluation(x, poly);
 	if(poly->power[0] == 0){
 
 		//for exp with powers starting from 0
@@ -138,23 +140,26 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 			//return poly->coeffs[1]*(x*x)+poly->coeffs[0]; //sinh, cosh
 		}
 		else if (poly->termsize == 3){
-		/*
+		
 			double temp1 = fma(x, poly->coeffs[2], poly->coeffs[1]);
 			return fma(x, temp1, poly->coeffs[0]);      
-		*/
+		
+		/*
 			double xsquare = x*x; // sinh, cosh
 			double y = poly->coeffs[2];
 			y *= xsquare;
 			y += poly->coeffs[1];
 			y *= xsquare;
 			y += poly->coeffs[0];
+		*/
 		}
 		else if (poly->termsize == 4){
-/*			double xsquare = x * x;
+			double xsquare = x * x;
 			double temp1 = fma(x, poly->coeffs[3], poly->coeffs[2]);
 			double temp2 = fma(x, poly->coeffs[1], poly->coeffs[0]);
 			return fma(xsquare, temp1, temp2);
-		*/
+		
+		/*
 			double xsquare = x * x;
 			double tmp1 = poly->coeffs[3]*x;
 			double tmp2 = poly->coeffs[1]*x;
@@ -164,14 +169,15 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 
 			double tmp5 = tmp3 * xsquare;
 			return tmp5 + tmp4;
+		*/
 		}    
 		else if(poly->termsize == 5){
-		/*	double xsquare = x * x;
+			double xsquare = x * x;
 			double temp1 = fma(x, poly->coeffs[1], poly->coeffs[0]);
 			double temp2 = fma(x, poly->coeffs[3], poly->coeffs[2]);
 			double temp3 = fma(xsquare, poly->coeffs[4], temp2);
 			return fma(xsquare, temp3, temp1);
-		*/
+		
 		/*	double xsquare = x*x;
 			double tmp1 = poly->coeffs[1]*x;
 			double tmp2 = poly->coeffs[3]*x;
@@ -186,17 +192,16 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 
 			return tmp7 + tmp8;
 		*/	//return (poly->coeffs[0] + x*poly->coeffs[1]) + x*x*(poly->coeffs[2] + x*poly->coeffs[3] + x*x*poly->coeffs[4]);
-			return rlibm_horner_evaluation(x, poly);
+	//		return rlibm_horner_evaluation(x, poly);
 
 		} else if(poly->termsize == 6){
-			return rlibm_horner_evaluation(x, poly);
-			/*double xsquare = x * x;
+		//	return rlibm_horner_evaluation(x, poly);
+			double xsquare = x * x;
 			double temp1 = fma(x, poly->coeffs[1], poly->coeffs[0]);
 			double temp2 = fma(x, poly->coeffs[5], poly->coeffs[4]);
 			double temp3 = fma(x, poly->coeffs[3], poly->coeffs[2]);
 			double temp4 = fma(xsquare, temp2, temp3);
 			return fma(xsquare, temp4, temp1);    
-			*/
 		}
 		return  rlibm_horner_evaluation(x, poly);
 	}
@@ -207,15 +212,15 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 		if(poly->termsize == 1){
 			return x*poly->coeffs[0];
 		} else if(poly->termsize == 2){
-			/*double temp = x * x * poly->coeffs[1];
+			double temp = x * x * poly->coeffs[1];
 			return fma(x, poly->coeffs[0],temp);
-*/
-			return rlibm_horner_evaluation(x, poly);
+
+			//return rlibm_horner_evaluation(x, poly);
 			//      return x*poly->coeffs[0] + x*x*poly->coeffs[1];
 		} else if(poly->termsize == 3){
-		/*	double temp = x * x * fma(x, poly->coeffs[2], poly->coeffs[1]);
+			double temp = x * x * fma(x, poly->coeffs[2], poly->coeffs[1]);
 			return fma(x, poly->coeffs[0], temp);
-		*/
+		/*
 			double xsquare = x * x;
 			double y = poly->coeffs[2];
 			y *= xsquare;
@@ -223,14 +228,15 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 			y *= xsquare;
 			y += poly->coeffs[0];
 			//     return x*poly->coeffs[0] + x*x*(poly->coeffs[1] + x*poly->coeffs[2]);
+		*/
 		} else if(poly->termsize == 4){
 
-		/*	double temp1 = fma(x, poly->coeffs[2], poly->coeffs[1]);
+			double temp1 = fma(x, poly->coeffs[2], poly->coeffs[1]);
 			double xsquare = x*x;
 			double temp2 = fma(xsquare, poly->coeffs[3], temp1);
 			double temp3 = xsquare * temp2;
 			return fma(x, poly->coeffs[0], temp3);
-		*/
+	/*	
 			double tmp1 = poly->coeffs[3]*x;
 			double tmp2 = poly->coeffs[1]*x;
 
@@ -243,16 +249,17 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 			double tmp6 = tmp4 + tmp5;
 
 			return tmp6 * x;
+			*/
 
 			//      return x*poly->coeffs[0] + x*x*(poly->coeffs[1] + x*poly->coeffs[2] + x*x*poly->coeffs[3]);
 		} else if(poly->termsize == 5){
-		/*	double xsquare = x*x;
+			double xsquare = x*x;
 			double temp1 = fma(x, poly->coeffs[4], poly->coeffs[3]);
 			double temp2 = fma(x, poly->coeffs[2], poly->coeffs[1]);
 			double temp3 = fma(xsquare, temp1, temp2);
 			double temp4 = xsquare * temp3;
 			return fma(x, poly->coeffs[0], temp4);
-		*/
+	/*	
 			double xsquare = x*x;
 			double tmp1 = poly->coeffs[2]*x;
 			double tmp2 = poly->coeffs[4]*x;
@@ -268,10 +275,10 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 			double tmp8 = tmp5 + tmp7;
 
 			return tmp8 + tmp6;
-
+*/
 			//     return x*poly->coeffs[0] + x^2*(poly->coeffs[1] + x^3*poly->coeffs[2] + x^4*(poly->coeffs[3] + x^5*poly->coeffs[4]));
 		} else if(poly->termsize == 6){
-		/*	
+			
 			double xsquare = x* x;
 			double temp1 = fma(x, poly->coeffs[4], poly->coeffs[3]);
 			double temp2 = fma(xsquare, poly->coeffs[5], temp1);
@@ -280,7 +287,7 @@ double rlibm_poly_evaluation(double x, polynomial* poly){
 			double temp4 = fma(xsquare, temp2, temp3);
 			double temp5 = xsquare * temp4;
 			return fma(x, poly->coeffs[0], temp5);
-*/
+
 	//		return rlibm_horner_evaluation(x, poly);
 /*
 			double xsquare = x * x;
@@ -586,31 +593,31 @@ int main(int argc, char** argv){
 
 
 	int MY_RLIBM_PIECES = 1;
-	//double ratios[] = {0.50, 0.15, 0.35}; // log
+
+	//double ratios[] = {0.5, 0.5}; // log
 	//double ratios[] = {0.325, 0.25, 0.125, 0.3}; // log10
+	double ratios[] = {1.0}; //log2, log w/ 6?
+	//double ratios[] = {1.0}; // exp2, sinh, cosh
 	//double ratios[] = {1.0}; // log1p up
 	//double ratios[] = {1.0}; // log1p down
-	//double ratios[] = {0.2, 0.3, 0.3, 0.2}; // exp10f, expf
-	double ratios[] = {1.0}; // sinh, cosh
-	//int powers[] = {0, 2, 4}; // cos stuff
+	//double ratios[] = {0.2, 0.3, 0.3, 0.2}; // exp10f
+	//double ratios[] = {0.2, 0.3, 0.32, 0.18}; // expf
+
+	int powers_size = 6;
+	//int powers[] = {1,2,3,4}; // log, log10
+	//int powers[] = {1,2,3,4,5}; // log2
+	int powers[] = {1,2,3,4,5,6}; // log 1piece
+	//int powers[] = {0,1,2,3,4,5}; //exp2
+	//int powers[] = {0,1,2,3,4}; //exp, exp10
+	//int powers[] = {1,3,5}; //sinh WARNING MAKE SURE YOU CHANGE POLY EVAL
+	//int powers[] = {0,2 ,4}; // cosh
+	//int powers[] = {0, 2, 4}; // cos stuff 
 	//int powers[] = {1, 3, 5}; // sin stuff
-	int powers[] = {1,3,5,7,9,11,13,15,17,19,21};
-	int powers_size = 11;
 
 	size_t nentries_total = 0;
 	interval_data* intervals_full = rlibm_read_interval_file(argv[1], &nentries_total);
 
 	//FILE* fp = fopen(argv[2], "w");
-
-	// int powers[]={1, 3, 5, 7, 9};
-
-	//log2, log10
-	//  int powers[]={0, 1,2,3,4,5,6, 7, 8, 9}; //coshx, exp2, exp10, exp
-	// int powers[] = {1,3,5,7}; //sinhx
-	// int powers[] = {0,2 ,4,6}; // coshx
-	//int powers[] = {1,3 ,5,7}; // sinpi
-	// int powers[] = {0,2,4,6}; // cospi
-
 	
 	size_t* indices = (size_t*)malloc((MY_RLIBM_PIECES+1)*sizeof(size_t));
 	

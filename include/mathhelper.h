@@ -24,7 +24,7 @@ static inline double multiply(double a, double b) {
 	Double compare = { .d = __builtin_fma(__builtin_fabs(a),__builtin_fabs(b),-__builtin_fabs(retval.d))};
 	//If compare.d is negative (including negative zero), that implies round away from zero occurred and vice versa.
 	//Subtract 2^l (where l is the exponent of the LSB of rnd(x)) from |rnd(x)| in the case that compare.d is negative.
-	retval.x -= (compare.x >= 0x8000000000000000);
+	retval.x -= (compare.x > 0x8000000000000000);
 	return retval.d;
 }
 
@@ -61,4 +61,30 @@ static inline double add(double a, double b) {
 	return retval.d;
 }
 
+static inline double divide(double a, double b) // a/b
+{
+	Double retval = {.d = a/b};
+	Double compare = {.d = __builtin_fma(retval.d, -b, a)};
+	// If compare is negative, retval should be decremented
+	retval.d -= (compare.x >= 0x8000000000000000);
+	return retval.d;
+}
+
+static inline double rndz_sqrt(double a)
+{
+	//ASSERT a is positive
+	Double retval = {.d = __builtin_sqrt(a)};
+	Double compare = {.d = __builtin_fma(retval.d, -retval.d, a)};
+	// If compare is negative, then retval should be decremented, as it currently stores an overestimate for sqrt(a)
+	retval.x -= (compare.x >= 0x8000000000000000);
+	return retval.d;
+}
+
+static inline double rndz_fma(double a, double b, double c)
+{
+	Double retval = {.d = __builtin_fma(a,b,c)};
+	Double compare = {.d = __builtin_fma(-a,b,retval.d)};
+	retval.x -= (((retval.d < 0.0) && (compare.d < c))||((retval.d >= 0.0) && (compare.d > c)));
+	return retval.d;
+}
 #endif

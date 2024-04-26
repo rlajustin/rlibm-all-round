@@ -6,6 +6,8 @@
 
 The generation process is nearly identical to the standard RLIBM approach. There are some differing constants, which are now generated with RNDZ rather than RNDN (done for consistency, but likely doesn't matter in the end). Range reduction, output compensation, and polynomial generation are all also computed with RNDZ, so it matches the generated implementation when it simulates RNDZ. 
 
+To run the oracle or interval generators, you can use the make rule `make <function>`. To make all of the functions, you can use `make all`.
+
 ## Testing
 
-The finished implmentations are all found in `src`
+The finished implmentations are all found in `src`.

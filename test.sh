@@ -1,7 +1,10 @@
 #!/bin/bash
+#usage: ./perf.sh log
 
-S=20
-N=100000
+#set -e
+
+S=2
+N=10
 M=${PERF_REPEAT:-500}
 
 { read -r -d '' prog_end || true; } <<EOF
@@ -14,7 +17,7 @@ END {
 	}
 	rms = sqrt(s/i-nout-1));
 	nmd = a[int(i/2)] - a[0];
-	printf "Ntrial = %d ; Min = %.3f + %.3f clc/call; Median-Min = %.3f clc/call;
+	printf "Ntrial = %d ; Min = %.3f + %.3f clc/call; Median-Min = %.3f clc/call; Max = %.3f clc/call;\n", i, a[0], rms, nmd, a[i-1];
 }
 EOF
 
@@ -47,15 +50,18 @@ perfom_perf_stat () {
 	perf stat -e cycles -x " " ./perf $PERF_ARGS 2>&1 | awk "/cycles/{print \$1/(${N}*${M})}"
 }
 
-prof_perf () {
+proc_perf () {
 	collect_perf_stat
 	process_perf_stat
 }
 
+#############
+
 LOG_FILE="$(mktemp log-file.XXXXXX)"
+RANDOMS_FILE="$(mktemp rand-file.XXXXXX)"
 
 f=$1
-u="$(echo src/$f.c)"
+u="$(echo src/${f}f.c)"
 
 if [ -f "$u" ]; then
 	dir="${u%/*}"
@@ -73,8 +79,30 @@ if [ -n "$LIBM" ]; then
 	unset LIBM
 fi
 
-make -s -C <PATH_TO_DIR> #need to set up tester support
-make -s clean
-make -s all
+i=1
+str_hsh=""
+str_dot=""
+while [ $i -le $S ]; do
+	str_hsh="${str_hsh}#"
+	str_dot="${str_dot}."
+	i=$(( i + 1 ))
+done
 
+cd $dir
 
+make -s -C test clean
+make -s -C test perf
+
+./perf --file ${RANDOMS_FILE} --count ${N} --reference # makes random file
+
+PERF_ARGS="--file ${RANDOMS_FILE} --count ${N} --repeat ${M}"
+
+proc_perf
+PERF_ARGS="${PERF_ARGS} --libc"
+proc_perf
+
+has_symbol () {
+	[ "$(nm "$LIBM" | while read a b c; do if [ "$c" = "$f" ]; then echo OK; return; fi; done | wc -l)" -ge 1 ]
+}
+
+export LIBM="$BACKUP_LIBM"

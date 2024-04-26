@@ -1,0 +1,162 @@
+EXIT_ON_THRESHOLD is 0
+number of intervals = 7191221
+piece = 0
+start_index = 0
+end_index = 7191221
+nentries=7191221
+Trying to generate a polynomial  with 1 terms 
+Trying to generate a polynomial  with 2 terms 
+Trying to generate a polynomial  with 3 terms 
+number of violated intervals: 64053, total iterations=1 
+Trying to generate a polynomial  with 3 terms 
+number of violated intervals: 64053, total iterations=2 
+Trying to generate a polynomial  with 3 terms 
+number of violated intervals: 55030, total iterations=3 
+Trying to generate a polynomial  with 3 terms 
+number of violated intervals: 23472, total iterations=4 
+Trying to generate a polynomial  with 3 terms 
+number of violated intervals: 17205, total iterations=5 
+Trying to generate a polynomial  with 3 terms 
+number of violated intervals: 15626, total iterations=6 
+Trying to generate a polynomial  with 3 terms 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 13188, total iterations=7 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 13188, total iterations=8 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 9985, total iterations=9 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 3892, total iterations=10 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 2279, total iterations=11 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 2096, total iterations=12 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 442, total iterations=13 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 241, total iterations=14 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 131, total iterations=15 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 125, total iterations=16 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 36, total iterations=17 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 30, total iterations=18 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 31, total iterations=19 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 33, total iterations=20 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 26, total iterations=21 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 22, total iterations=22 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 20, total iterations=23 
+Trying to generate a polynomial  with 4 terms 
+number of violated intervals: 20, total iterations=24 
+Trying to generate a polynomial  with 4 terms 
+Trying to generate a polynomial  with 5 terms 
+number of violated intervals: 14, total iterations=25 
+Trying to generate a polynomial  with 5 terms 
+number of violated intervals: 8, total iterations=26 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x0p+0
+violated_input is 0x1.eep-14, lb is 0x1.64531e0000001p-13, ub is 0x1.64531efffffffp-13
+violated_input is 0x1.e6cp-13, lb is 0x1.5f133d0000001p-12, ub is 0x1.5f133dfffffffp-12
+violated_input is 0x1.26p-11, lb is 0x1.a808900000001p-11, ub is 0x1.a80890fffffffp-11
+violated_input is 0x1.5cbc14e5e0a72p-11, lb is 0x1.f6f31e54354p-11, ub is 0x1.f6f357f7a67ffp-11
+violated_input is 0x1.96cd9b366cd9bp-11, lb is 0x1.25552107b9cp-10, ub is 0x1.25552907b99ffp-10
+violated_input is 0x1.9ccccccccccccp-11, lb is 0x1.29a7b13cd7p-10, ub is 0x1.29a7b41aa0dffp-10
+violated_input is 0x1.1f83838383838p-10, lb is 0x1.9e91381aa1p-10, ub is 0x1.9e913c1aa0dffp-10
+violated_input is 0x1.2e08p-10, lb is 0x1.b37cf70000001p-10, ub is 0x1.b37cf7fffffffp-10
+Polynomial: y=0x1.71547652d4b53p+0 x^(1) + -0x1.7154773804409p-1 x^(2) + 0x1.ec7322d44077ep-2 x^(3) + -0x1.72cf885ec8cc3p-2 x^(4) + 0x1.75317a49dbb1bp-2 x^(5)
+Trying to generate a polynomial  with 5 terms 
+number of violated intervals: 8, total iterations=27 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x0p+0
+violated_input is 0x1.eep-14, lb is 0x1.64531e0000001p-13, ub is 0x1.64531efffffffp-13
+violated_input is 0x1.e6cp-13, lb is 0x1.5f133d0000001p-12, ub is 0x1.5f133dfffffffp-12
+violated_input is 0x1.26p-11, lb is 0x1.a808900000001p-11, ub is 0x1.a80890fffffffp-11
+violated_input is 0x1.5cbc14e5e0a72p-11, lb is 0x1.f6f31e54354p-11, ub is 0x1.f6f357f7a67ffp-11
+violated_input is 0x1.96cd9b366cd9bp-11, lb is 0x1.25552107b9cp-10, ub is 0x1.25552907b99ffp-10
+violated_input is 0x1.9ccccccccccccp-11, lb is 0x1.29a7b13cd7p-10, ub is 0x1.29a7b41aa0dffp-10
+violated_input is 0x1.1f83838383838p-10, lb is 0x1.9e91381aa1p-10, ub is 0x1.9e913c1aa0dffp-10
+violated_input is 0x1.2e08p-10, lb is 0x1.b37cf70000001p-10, ub is 0x1.b37cf7fffffffp-10
+Polynomial: y=0x1.71547652d4b53p+0 x^(1) + -0x1.7154773804409p-1 x^(2) + 0x1.ec7322d44077ep-2 x^(3) + -0x1.72cf885ec8cc3p-2 x^(4) + 0x1.75317a49dbb1bp-2 x^(5)
+Trying to generate a polynomial  with 5 terms 
+number of violated intervals: 8, total iterations=28 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x0p+0
+violated_input is 0x1.eep-14, lb is 0x1.64531e0000001p-13, ub is 0x1.64531efffffffp-13
+violated_input is 0x1.e6cp-13, lb is 0x1.5f133d0000001p-12, ub is 0x1.5f133dfffffffp-12
+violated_input is 0x1.26p-11, lb is 0x1.a808900000001p-11, ub is 0x1.a80890fffffffp-11
+violated_input is 0x1.5cbc14e5e0a72p-11, lb is 0x1.f6f31e54354p-11, ub is 0x1.f6f357f7a67ffp-11
+violated_input is 0x1.96cd9b366cd9bp-11, lb is 0x1.25552107b9cp-10, ub is 0x1.25552907b99ffp-10
+violated_input is 0x1.9ccccccccccccp-11, lb is 0x1.29a7b13cd7p-10, ub is 0x1.29a7b41aa0dffp-10
+violated_input is 0x1.1f83838383838p-10, lb is 0x1.9e91381aa1p-10, ub is 0x1.9e913c1aa0dffp-10
+violated_input is 0x1.2e08p-10, lb is 0x1.b37cf70000001p-10, ub is 0x1.b37cf7fffffffp-10
+Polynomial: y=0x1.71547652d4b53p+0 x^(1) + -0x1.7154773804409p-1 x^(2) + 0x1.ec7322d44077ep-2 x^(3) + -0x1.72cf885ec8cc3p-2 x^(4) + 0x1.75317a49dbb1bp-2 x^(5)
+Trying to generate a polynomial  with 5 terms 
+number of violated intervals: 8, total iterations=29 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x0p+0
+violated_input is 0x1.eep-14, lb is 0x1.64531e0000001p-13, ub is 0x1.64531efffffffp-13
+violated_input is 0x1.e6cp-13, lb is 0x1.5f133d0000001p-12, ub is 0x1.5f133dfffffffp-12
+violated_input is 0x1.26p-11, lb is 0x1.a808900000001p-11, ub is 0x1.a80890fffffffp-11
+violated_input is 0x1.5cbc14e5e0a72p-11, lb is 0x1.f6f31e54354p-11, ub is 0x1.f6f357f7a67ffp-11
+violated_input is 0x1.96cd9b366cd9bp-11, lb is 0x1.25552107b9cp-10, ub is 0x1.25552907b99ffp-10
+violated_input is 0x1.9ccccccccccccp-11, lb is 0x1.29a7b13cd7p-10, ub is 0x1.29a7b41aa0dffp-10
+violated_input is 0x1.1f83838383838p-10, lb is 0x1.9e91381aa1p-10, ub is 0x1.9e913c1aa0dffp-10
+violated_input is 0x1.2e08p-10, lb is 0x1.b37cf70000001p-10, ub is 0x1.b37cf7fffffffp-10
+Polynomial: y=0x1.71547652d4b53p+0 x^(1) + -0x1.7154773804409p-1 x^(2) + 0x1.ec7322d44077ep-2 x^(3) + -0x1.72cf885ec8cc3p-2 x^(4) + 0x1.75317a49dbb1bp-2 x^(5)
+Trying to generate a polynomial  with 5 terms 
+number of violated intervals: 8, total iterations=30 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x0p+0
+violated_input is 0x1.eep-14, lb is 0x1.64531e0000001p-13, ub is 0x1.64531efffffffp-13
+violated_input is 0x1.e6cp-13, lb is 0x1.5f133d0000001p-12, ub is 0x1.5f133dfffffffp-12
+violated_input is 0x1.26p-11, lb is 0x1.a808900000001p-11, ub is 0x1.a80890fffffffp-11
+violated_input is 0x1.5cbc14e5e0a72p-11, lb is 0x1.f6f31e54354p-11, ub is 0x1.f6f357f7a67ffp-11
+violated_input is 0x1.96cd9b366cd9bp-11, lb is 0x1.25552107b9cp-10, ub is 0x1.25552907b99ffp-10
+violated_input is 0x1.9ccccccccccccp-11, lb is 0x1.29a7b13cd7p-10, ub is 0x1.29a7b41aa0dffp-10
+violated_input is 0x1.1f83838383838p-10, lb is 0x1.9e91381aa1p-10, ub is 0x1.9e913c1aa0dffp-10
+violated_input is 0x1.2e08p-10, lb is 0x1.b37cf70000001p-10, ub is 0x1.b37cf7fffffffp-10
+Polynomial: y=0x1.71547652d4b53p+0 x^(1) + -0x1.7154773804409p-1 x^(2) + 0x1.ec7322d44077ep-2 x^(3) + -0x1.72cf885ec8cc3p-2 x^(4) + 0x1.75317a49dbb1bp-2 x^(5)
+Trying to generate a polynomial  with 5 terms 
+number of violated intervals: 8, total iterations=31 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x0p+0
+violated_input is 0x1.eep-14, lb is 0x1.64531e0000001p-13, ub is 0x1.64531efffffffp-13
+violated_input is 0x1.e6cp-13, lb is 0x1.5f133d0000001p-12, ub is 0x1.5f133dfffffffp-12
+violated_input is 0x1.26p-11, lb is 0x1.a808900000001p-11, ub is 0x1.a80890fffffffp-11
+violated_input is 0x1.5cbc14e5e0a72p-11, lb is 0x1.f6f31e54354p-11, ub is 0x1.f6f357f7a67ffp-11
+violated_input is 0x1.96cd9b366cd9bp-11, lb is 0x1.25552107b9cp-10, ub is 0x1.25552907b99ffp-10
+violated_input is 0x1.9ccccccccccccp-11, lb is 0x1.29a7b13cd7p-10, ub is 0x1.29a7b41aa0dffp-10
+violated_input is 0x1.1f83838383838p-10, lb is 0x1.9e91381aa1p-10, ub is 0x1.9e913c1aa0dffp-10
+violated_input is 0x1.2e08p-10, lb is 0x1.b37cf70000001p-10, ub is 0x1.b37cf7fffffffp-10
+Polynomial: y=0x1.71547652d4b53p+0 x^(1) + -0x1.7154773804409p-1 x^(2) + 0x1.ec7322d44077ep-2 x^(3) + -0x1.72cf885ec8cc3p-2 x^(4) + 0x1.75317a49dbb1bp-2 x^(5)
+Trying to generate a polynomial  with 5 terms 
+number of violated intervals: 1, total iterations=32 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x0p+0
+violated_input is 0x1.96cd9b366cd9bp-11, lb is 0x1.25552107b9cp-10, ub is 0x1.25552907b99ffp-10
+Polynomial: y=0x1.71547652bf14cp+0 x^(1) + -0x1.715476a8966b5p-1 x^(2) + 0x1.ec71cb1242181p-2 x^(3) + -0x1.721f92a323f64p-2 x^(4) + 0x1.54a6acb03a654p-2 x^(5)
+Trying to generate a polynomial  with 5 terms 
+number of violated intervals: 1, total iterations=33 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x0p+0
+violated_input is 0x1.96cd9b366cd9bp-11, lb is 0x1.25552107b9cp-10, ub is 0x1.25552907b99ffp-10
+Polynomial: y=0x1.71547652bf14cp+0 x^(1) + -0x1.715476a8966b5p-1 x^(2) + 0x1.ec71cb1242181p-2 x^(3) + -0x1.721f92a323f64p-2 x^(4) + 0x1.54a6acb03a654p-2 x^(5)
+Trying to generate a polynomial  with 5 terms 
+number of violated intervals: 1, total iterations=34 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x0p+0
+violated_input is 0x1.96cd9b366cd9bp-11, lb is 0x1.25552107b9cp-10, ub is 0x1.25552907b99ffp-10
+Polynomial: y=0x1.71547652bf14cp+0 x^(1) + -0x1.715476a8966b5p-1 x^(2) + 0x1.ec71cb1242181p-2 x^(3) + -0x1.721f92a323f64p-2 x^(4) + 0x1.54a6acb03a654p-2 x^(5)
+Trying to generate a polynomial  with 5 terms 
+number of violated intervals: 0, total iterations=35 
+VIOLATING INPUTS BELOW THRESHOLD:
+starting input is 0x0p+0
+Polynomial: y=0x1.71547652bcbe6p+0 x^(1) + -0x1.715476937c465p-1 x^(2) + 0x1.ec718e128e52ep-2 x^(3) + -0x1.71fc5a5edbe33p-2 x^(4) + 0x1.4d95a4703311cp-2 x^(5)
+Polynomial: y=0x1.71547652bcbe6p+0 x^(1) + -0x1.715476937c465p-1 x^(2) + 0x1.ec718e128e52ep-2 x^(3) + -0x1.71fc5a5edbe33p-2 x^(4) + 0x1.4d95a4703311cp-2 x^(5)

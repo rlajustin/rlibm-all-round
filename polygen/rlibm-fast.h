@@ -11,10 +11,10 @@
 #include<random>
 
 #define MAX_TRIES 50
-#define VIOLATE_THRESHOLD 5
+#define VIOLATE_THRESHOLD 10
 #define SAMPLE_MATCH_THRESHOLD 20
 #define MAX_ITERATIONS 2000
-#define N_RLIBM_PIECES 1
+//#define N_RLIBM_PIECES 1
 
 
 //#define EXIT_ON_THRESHOLD

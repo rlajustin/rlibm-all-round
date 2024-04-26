@@ -122,17 +122,16 @@ void MergeFiles(string s1, string s2, string d) {
 	fclose(fd);
 } 
 
-void SortIntervalFile(FILE* f, string dest) {
+void SortIntervalFile(string source, string dest) {
 	map<double, Interval> intervals;
 	map<double, Interval>::iterator it;
 	queue<string> tempFiles;
-	/* 
-	   FILE* f = fopen(source.c_str(), "r");
-	   if (!f) {
-	   printf("Could not open file\n");
-	   }
-	   double data[3];
-	 */
+	FILE* f = fopen(source.c_str(), "r");
+	if (!f) {
+		printf("Could not open file\n");
+		exit(0);
+	}
+	double data[3];
 	unsigned long long int counter = 0;
 	while (fread(data, sizeof(double), 3, f) == 3) {
 		if (data[1] <= -1.0e300 && data[2] >= 1.0e300) {
