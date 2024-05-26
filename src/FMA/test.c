@@ -1,7 +1,7 @@
 #ifndef BASICTEST_C
 #define BASICTEST_C
 #include <stdio.h>
-#include "coshFMA.c"
+#include "log.c"
 #include <x86intrin.h>
 #include <stdlib.h>
 #include <fenv.h>
@@ -9,8 +9,6 @@
 
 #define LO 0x0
 #define HI 0x100000000
-
-//#define LO 0xb326c4e3
 
 void RunTest(FILE* fp, FILE* oracle) {
 	unsigned long count = 0;
@@ -30,7 +28,7 @@ void RunTest(FILE* fp, FILE* oracle) {
 
 		do {
 			t1 = __rdtscp(&dummy);
-			res = rlibm34_coshf(x);
+			res = rlibm34_logf(x);
 			t2 = __rdtscp(&dummy);
 		} while(t2 <= t1);
 

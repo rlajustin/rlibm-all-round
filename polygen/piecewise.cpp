@@ -592,21 +592,21 @@ int main(int argc, char** argv){
 	printf("EXIT_ON_THRESHOLD is %d\n", RLIBM_EXIT_ON_THRESHOLD);
 
 
-	int MY_RLIBM_PIECES = 1;
+	int MY_RLIBM_PIECES = 2;
 
-	//double ratios[] = {0.5, 0.5}; // log
+	double ratios[] = {0.547, 0.453}; // log
 	//double ratios[] = {0.325, 0.25, 0.125, 0.3}; // log10
-	double ratios[] = {1.0}; //log2, log w/ 6?
+	//double ratios[] = {1.0}; //log2, log w/ 6?
 	//double ratios[] = {1.0}; // exp2, sinh, cosh
 	//double ratios[] = {1.0}; // log1p up
 	//double ratios[] = {1.0}; // log1p down
 	//double ratios[] = {0.2, 0.3, 0.3, 0.2}; // exp10f
 	//double ratios[] = {0.2, 0.3, 0.32, 0.18}; // expf
 
-	int powers_size = 6;
-	//int powers[] = {1,2,3,4}; // log, log10
+	int powers_size = 4;
+	int powers[] = {1,2,3,4}; // log, log10
 	//int powers[] = {1,2,3,4,5}; // log2
-	int powers[] = {1,2,3,4,5,6}; // log 1piece
+	//int powers[] = {1,2,3,4,5,6}; // log 1piece
 	//int powers[] = {0,1,2,3,4,5}; //exp2
 	//int powers[] = {0,1,2,3,4}; //exp, exp10
 	//int powers[] = {1,3,5}; //sinh WARNING MAKE SURE YOU CHANGE POLY EVAL

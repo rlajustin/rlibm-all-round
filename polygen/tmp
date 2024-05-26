@@ -1,0 +1,22 @@
+starting input is 0x0p+0
+violated_input is 0x1.7096969696969p-11, lb is 0x1.707567c76c2p-11, ub is 0x1.70756f7c3c1ffp-11
+violated_input is 0x1.67f6db6db6db6p-10, lb is 0x1.67b7a57466p-10, ub is 0x1.67b7cfcd9f5ffp-10
+violated_input is 0x1.d6f7e432f7e42p-10, lb is 0x1.d68bb6f7c8p-10, ub is 0x1.d68be43409dffp-10
+violated_input is 0x1.ebdfbf7efdfbfp-10, lb is 0x1.eb69c2c46f6p-10, ub is 0x1.eb69c6c46f3ffp-10
+violated_input is 0x1.1f7a3bf6c657ap-9, lb is 0x1.1f29a54ca12p-9, ub is 0x1.1f29a927080ffp-9
+violated_input is 0x1.57497b425ed09p-9, lb is 0x1.56d6991a2fep-9, ub is 0x1.56d69cf495bffp-9
+violated_input is 0x1.6ab366cd9b366p-9, lb is 0x1.6a33296237bp-9, ub is 0x1.6a332b62379ffp-9
+violated_input is 0x1.78d3dcb08d3dcp-9, lb is 0x1.78496eb2accp-9, ub is 0x1.784974d37e8ffp-9
+Polynomial: y=0x1.fffffffffffcdp-1 x^(1) + -0x1.ffffff5d2d35dp-2 x^(2) + 0x1.555267302d338p-2 x^(3) + -0x1.f90351975c4dap-3 x^(4)
+
+
+starting input is 0x1.79f31219dbcc3p-9
+violated_input is 0x1.7b4a2b10bf66dp-9, lb is 0x1.7abdf3201p-9, ub is 0x1.7abdfcc0878ffp-9
+violated_input is 0x1.bab0df6b0df6ap-9, lb is 0x1.b9f1db48f18p-9, ub is 0x1.b9f1eba5517ffp-9
+violated_input is 0x1.be41a41a41a41p-9, lb is 0x1.bd7f8c2ea534p-9, ub is 0x1.bd7f9a9f5533fp-9
+violated_input is 0x1.e05c28f5c28f4p-9, lb is 0x1.df7b5c64657p-9, ub is 0x1.df7b5f1536fffp-9
+violated_input is 0x1.e8a1fd1b7af01p-9, lb is 0x1.e7b9668c4bp-9, ub is 0x1.e7b974fcfd1ffp-9
+violated_input is 0x1.1d085fb37072dp-8, lb is 0x1.1c6a27473698p-8, ub is 0x1.1c6a2e7f9207fp-8
+violated_input is 0x1.3155555555555p-8, lb is 0x1.309fcf6433c8p-8, ub is 0x1.309fd0d9bc5bfp-8
+violated_input is 0x1.9c0a2c145828bp-8, lb is 0x1.9abff5d8cb92p-8, ub is 0x1.9abff74b1313fp-8
+Polynomial: y=0x1.fffffffed9792p-1 x^(1) + -0x1.fffff8985b2c3p-2 x^(2) + 0x1.554cab9fba2bp-2 x^(3) + -0x1.f7494631f6a56p-3 x^(4)
